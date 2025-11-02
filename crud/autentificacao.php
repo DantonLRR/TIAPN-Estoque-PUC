@@ -30,11 +30,9 @@ if(isset($_POST['usuario']) || isset($_POST['senha'])){
             exit();
             
         }else{
-            $_SESSION['mensagem'] = "Usuario ou senhas incorretos";
+            $_SESSION['mensagem'] = "Usuario ou senha incorretos";
             header('location:../pages/login.php');
             exit();
-            echo"Falha ao logar! E-mail ou senha incorretos";
-
         }
 
     }
