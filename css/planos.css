@@ -1,0 +1,50 @@
+
+:root {
+  --pink: #F7446B;
+}
+/* container descritivo */
+.container-back{
+    background-color: var(--pink);
+    height: 40em;
+    
+}
+
+/* Cards */
+.card {
+ 
+  border-radius: 12px;
+  border: 2px solid var(--pink);
+}
+
+
+.text-pink {
+  color: var(--pink) !important;
+}
+
+.card-price {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+
+.btn-pink {
+  background-color: var(--pink);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-pink:hover {
+  background-color: #d93c5f;
+  color: #fff;
+}
+
+/* Listas dentro dos cards */
+ul {
+  padding-left: 0;
+}
+
+li {
+  margin: 6px 0;
+}
