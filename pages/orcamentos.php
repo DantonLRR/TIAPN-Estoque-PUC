@@ -57,10 +57,10 @@ $buscaOrcamentos = $listaOrcamento->buscaOrcamentos($conn);
                                         <td> <?= $row['valor_orcado'] ?></td>
                                         <td>
                                             <a href="editarOrcamento.php?id=<?= $row['id'] ?>" class="btn btn-secondary btn-sm">Editar</a>
-                                            <form action="crud/orcamentoCRUD.php" method="POST" class="d-inline">
+                                            <form action="../crud/orcamentoCRUD.php" method="POST" class="d-inline">
                                                 <button type="submit" onclick="return confirm('Deseja realmente excuir este orçamento?')" name="deletar_orcamento" value="<?= $row['id'] ?>" class="btn btn-danger btn-sm"> Excluir</button>
                                             </form>
-                                            <form action="crud/orcamentoCRUD.php" method="POST" class="d-inline">
+                                            <form action="../crud/orcamentoCRUD.php" method="POST" class="d-inline">
                                                 <button type="submit" onclick="return confirm('Deseja realmente aprovar este orçamento?')" name="aprovar_orcamento" value="<?= $row['id'] ?>" class="btn btn-success btn-sm"> Aprovar</button>
                                             </form>
                                         </td>
