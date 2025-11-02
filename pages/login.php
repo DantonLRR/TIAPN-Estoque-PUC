@@ -1,3 +1,51 @@
+
+<?php
+include('../conexao_DB.php');
+session_start();
+
+if (isset($_SESSION['id'])) {
+    header("Location: ../pages/dashboard.php");
+    exit();
+}
+
+
+
+if(isset($_POST['usuario']) || isset($_POST['senha'])){
+
+    if(strlen($_POST['usuario'])==0){
+        echo"Preencha seu usuario";
+    }else if(strlen($_POST['senha']) == 0){
+        echo"Preencha sua senha";
+    }else{
+
+        $usuario = $conn->real_escape_string($_POST['usuario']);
+        $senha = $conn->real_escape_string($_POST['senha']);
+    
+        $sql = "SELECT * FROM usuarios WHERE usuario = '$usuario' AND senha = '$senha' ";
+        $sql_query = $conn->query($sql) or die("Falha ao conectar:" . $mysqli->error);
+
+        $quantidade = $sql_query->num_rows;
+
+        if($quantidade == 1){
+
+            $usuario = $sql_query->fetch_assoc();
+            
+
+            $_SESSION['id'] = $usuario['id'];
+            $_SESSION['nome'] = $usuario['nome'];
+
+            header("Location: ../pages/dashboard.php");
+            exit();
+            
+        }else{
+            echo"Falha ao logar! E-mail ou senha incorretos";
+
+        }
+
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -25,9 +73,10 @@
     <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center bg-light">
       <div class="card shadow p-4 border-0" style="width: 100%; max-width: 380px; border-radius: 12px;">
         <h5 class="fw-bold mb-1">Conecte-se</h5>
+        
         <p class="text-muted small mb-4">Entre com suas credenciais para acessar o sistema</p>
 
-        <form action="login.php" method="POST">
+        <form action="" method="POST">
           <div class="mb-3">
             <label for="usuario" class="form-label small fw-semibold">Usuário</label>
             <input type="text" class="form-control input-pink" id="usuario" name="usuario" placeholder="Digite seu usuário" required>
