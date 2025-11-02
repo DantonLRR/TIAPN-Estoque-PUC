@@ -1,12 +1,12 @@
 <?php
-//session_start();
-//if (!isset($_SESSION['user'])) {
-//    header("Location: index.php");
-//    exit();
-//}
-$_SESSION['user'] = "Danton" ;
+session_start();
+if (!isset($_SESSION['user'])) {
+    header("Location: index.php");
+    exit();
+}
 
-include('../conexao_DB.php');
+
+include('../crud/conexao_DB.php');
 
 ?>
 <!DOCTYPE html>
