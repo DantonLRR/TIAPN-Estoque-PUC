@@ -1,0 +1,30 @@
+body {
+    padding-top: 60px;
+}
+
+.card-action .card {
+    background-color: #fff;
+    border: 1px solid #eee;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-action .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    font-size: 40px;
+    color: #ec407a; 
+}
+
+.card h5 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: #555;
+}

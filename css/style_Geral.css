@@ -1,0 +1,42 @@
+body {
+  background-color: #f9f9fb;
+}
+
+.navbar {
+  height: 60px;
+}
+
+.btn-pink {
+  background-color: #ec407a !important;
+  color: white !important;
+  border-radius: 10px !important;
+  transition: 0.3s !important;
+}
+
+.btn-pink:hover {
+  background-color: #f7446b !important;
+  color: #fff !important;
+}
+
+.text-pink {
+  color: #ec407a !important;
+}
+
+.feature-icon,
+.logo-icon {
+  color: #ec407a !important;
+}
+
+.hero {
+  min-height: 70vh;
+}
+
+.card {
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}

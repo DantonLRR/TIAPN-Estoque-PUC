@@ -1,0 +1,37 @@
+/* Estilo geral */
+body {
+  overflow: hidden;
+}
+
+/* Lado esquerdo (imagem) */
+.left-side {
+  background-image: url('../img/fashion-warehouse.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.left-side::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Texto da esquerda */
+.left-side .text-center {
+  position: relative;
+  z-index: 1;
+}
+
+/* Campos e botões */
+.input-pink {
+  border: 2px solid #f8b2c1;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.input-pink:focus {
+  border-color: #f472b6;
+  box-shadow: 0 0 0 0.2rem rgba(244, 114, 182, 0.25);
+}
