@@ -6,6 +6,8 @@
 //}
 $_SESSION['user'] = "Danton" ;
 
+include('../conexao_DB.php');
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
