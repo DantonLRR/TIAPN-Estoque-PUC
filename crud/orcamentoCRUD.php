@@ -12,7 +12,7 @@ if (isset($_POST['criar_orcamento'])) {
     if (!is_numeric($valor)) {
         // Retorna mensagem informando o erro
         $_SESSION['mensagem'] = 'Valor orçado inválido. Digite apenas números.';
-        header('Location: ../index.php');
+        header('Location: ../pages/criar_orcamento.php');
         exit;
     }
     $sql = "INSERT INTO orcamento_estoque(cliente, dta_hora_orcamento, vendedor, descricao, valor_orcado) 
@@ -23,11 +23,11 @@ if (isset($_POST['criar_orcamento'])) {
     if (mysqli_affected_rows($conn) > 0) {
         // redireciono para index e crio uma mensagem para ser exibida para o usuario 
         $_SESSION['mensagem'] = 'Orçamento Criado com sucesso';
-        header('location:../index.php');
+        header('location:../pages/criar_orcamento.php');
         exit;
     } else {
         $_SESSION['mensagem'] = 'Orçamento não pode ser criado Procure o administrador';
-        header('location:../index.php');
+        header('location:../pages/criar_orcamento.php');
         exit;
     }
 }

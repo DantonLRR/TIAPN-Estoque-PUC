@@ -1,6 +1,6 @@
 <?php
 // criar a tela de cadastro de orçamento.
-require('crud/conexao_DB.php');
+require('../crud/conexao_DB.php');
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -10,21 +10,22 @@ require('crud/conexao_DB.php');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Criar orçamentos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style_geral.css">
 </head>
 
 <body>
-    <?php include('assets/navbar/navbar.php');  ?>
+    <?php include('../assets/navbar/navbar.php');  ?>
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <h4>Criar Orçamento
-                            <a href="index.php" class="btn btn-danger float-end">Voltar</a>
+                            <a href="orcamentos.php" class="btn btn-danger float-end">Voltar</a>
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form action="crud/orcamentoCRUD.php" method="POST">
+                        <form action="../crud/orcamentoCRUD.php" method="POST">
                             <div class="mb-3">
                                 <label for="cliente">Cliente: </label>
                                 <input type="text" name="cliente" class="form-control" required>
@@ -43,6 +44,7 @@ require('crud/conexao_DB.php');
                                 <label for="valor"> Valor orçado:</label>
                                 <input type="text" id="valor" name="valor" class="form-control" required>
                             </div>
+                              <?php include('../assets/mensagem/mensagem.php'); ?>
                             <div class="mb-3">
                                 <button type="submit" name="criar_orcamento" class="btn btn-primary"> Salvar </button>
                             </div>
