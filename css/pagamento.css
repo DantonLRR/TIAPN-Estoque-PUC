@@ -1,0 +1,46 @@
+:root { 
+  --pink: #F7446B; 
+}
+
+body { 
+  padding-top: 70px; 
+}
+
+/* cor */
+.text-pink { 
+  color: var(--pink); 
+}
+.badge-pink { 
+  background: var(--pink); 
+  color: #fff; 
+}
+
+/* Botões */
+.btn-pink { 
+  background: var(--pink); 
+  color: #fff; 
+  border: 0; 
+  border-radius: 8px; 
+  transition: background .2s ease, opacity .2s ease;
+}
+.btn-pink:hover { 
+  background: #d93c5f; 
+  color: #fff; 
+  opacity: .95; 
+}
+
+/* Cartões da página */
+.card-summary { 
+  border: 2px solid var(--pink); 
+}
+
+.qr-box { 
+  background: #fff; 
+  border-radius: 12px; 
+  padding: 16px; 
+}
+
+.muted { 
+  color: #6c757d; 
+  font-size: .95rem; 
+}

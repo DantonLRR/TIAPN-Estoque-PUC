@@ -189,7 +189,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Scroll suave pros planos  -->
+  <!-- Scroll pros planos  -->
   <script>
     document.querySelectorAll('a[href^="#planos"]').forEach(a=>{
       a.addEventListener('click', e=>{
