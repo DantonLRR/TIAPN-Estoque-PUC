@@ -21,7 +21,7 @@ require('crud/conexao_DB.php');
                 <div class="card">
                     <div class="card-header">
                         <h4>Criar Usuario
-                            <a href="index.php" class="btn btn-danger float-end">Voltar</a>
+                            <a href="usuarios.php" class="btn btn-danger float-end">Voltar</a>
                         </h4>
                     </div>
                     <div class="card-body">

@@ -56,6 +56,15 @@ include('../crud/conexao_DB.php');
                     </div>
                 </a>
             </div>
+             <div class="col-md-4">
+                <a href="usuarios.php" class="card-action text-decoration-none">
+                    <div class="card text-center p-4">
+                        <div class="feature-icon mb-3"><i class="bi bi-graph-up"></i></div>
+                        <h5>Usuarios</h5>
+                        <p>Gerencie o usuario dos seus funcionarios.</p>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 

@@ -12,7 +12,7 @@ require('../crud/conexao_DB.php');
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style_geral.css">
 </head>
-
+ 
 <body>
     <?php include('../assets/navbar/navbar.php'); ?>
 
