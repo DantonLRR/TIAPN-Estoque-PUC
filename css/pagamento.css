@@ -1,46 +1,79 @@
-:root { 
-  --pink: #F7446B; 
+/* ====== CONTAINER PRINCIPAL ====== */
+
+.checkout-wrapper {
+  max-width: 1100px;      /* card grande, mas com margens laterais */
+  margin: 2rem auto;      /* centraliza no meio da tela */
 }
 
-body { 
-  padding-top: 70px; 
+/* ====== CARD PRINCIPAL ====== */
+
+.checkout-wrapper .card {
+  border-radius: 16px;
+  border: 1px solid #eee;
 }
 
-/* cor */
-.text-pink { 
-  color: var(--pink); 
-}
-.badge-pink { 
-  background: var(--pink); 
-  color: #fff; 
+/* Título "Finalizar pagamento" já está com text-center no HTML,
+   aqui só deixamos um pouco maior se quiser */
+.checkout-wrapper h4 {
+  font-size: 1.4rem;
+  font-weight: 600;
 }
 
-/* Botões */
-.btn-pink { 
-  background: var(--pink); 
-  color: #fff; 
-  border: 0; 
-  border-radius: 8px; 
-  transition: background .2s ease, opacity .2s ease;
-}
-.btn-pink:hover { 
-  background: #d93c5f; 
-  color: #fff; 
-  opacity: .95; 
+/* ====== FORM / CAMPOS ====== */
+
+.checkout-wrapper .form-label {
+  font-weight: 500;
 }
 
-/* Cartões da página */
-.card-summary { 
-  border: 2px solid var(--pink); 
+.checkout-wrapper .form-control,
+.checkout-wrapper .form-select {
+  border-radius: 10px;
 }
 
-.qr-box { 
-  background: #fff; 
-  border-radius: 12px; 
-  padding: 16px; 
+/* texto auxiliar (muted) */
+.checkout-wrapper .muted,
+.checkout-wrapper .text-muted {
+  font-size: 0.9rem;
 }
 
-.muted { 
-  color: #6c757d; 
-  font-size: .95rem; 
+/* ====== COBRANÇA RECORRENTE ====== */
+
+.checkout-wrapper .form-check-input[type="checkbox"] {
+  cursor: pointer;
+}
+
+/* ====== TOTAL + BOTÃO ====== */
+
+.checkout-wrapper #totalPreview {
+  font-size: 1.6rem;
+}
+
+/* garante que o botão "Pagar" fique bonitão */
+.checkout-wrapper .btn-pink.btn-lg {
+  padding-inline: 2.5rem;
+}
+
+/* ====== RESPONSIVO ====== */
+
+@media (max-width: 768px) {
+  .checkout-wrapper {
+    max-width: 100%;
+    margin: 1rem auto;
+  }
+
+  .checkout-wrapper .card {
+    padding: 1.5rem !important;
+  }
+
+  .checkout-wrapper .d-flex.align-items-center.justify-content-between {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+  }
+
+  .checkout-wrapper .btn-pink.btn-lg {
+    align-self: stretch;
+    text-align: center;
+    width: 100%;
+  }
 }
