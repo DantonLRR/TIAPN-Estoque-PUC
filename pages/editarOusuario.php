@@ -1,11 +1,11 @@
 <?php
 
-include('crud/pesquisa_usuario.php');
-include('crud/usuarioCRUD')
+include('../crud/pesquisa_usuarios.php');
+include('../crud/usuarioCRUD.php');
 
 ?>
 <!doctype html>
-< lang="pt-br">
+<html lang="pt-br">
 
 <head>
     <meta charset="utf-8">
@@ -16,13 +16,13 @@ include('crud/usuarioCRUD')
 
 
 <body>
-    <?php include('assets/navbar/navbar.php');  ?>
+    <?php include('../assets/navbar/navbar.php');  ?>
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Ediar Usuario
+                        <h4>Editar Usuario
                             <a href="index.php" class="btn btn-danger float-end">Voltar</a>
                         </h4>
                     </div>
@@ -31,7 +31,7 @@ include('crud/usuarioCRUD')
                         if(isset($_GET['id'])){
                            $usuario_id = $_GET['id'];
                            $PesquisaUsuario = new pesquisa();
-                           $pesquisaComID = $PesquisaUsuario->buscaUsuarioPorID($conn, $usuario_id);
+                           $pesquisaComID = $PesquisaUsuario->buscarUsuarios($conn, $usuario_id);
                            foreach($pesquisaComID as $rowUsuarioPorID):
                             ?> 
                             <form action="crud/usuarioCRUD.php" method="POST">
@@ -46,6 +46,15 @@ include('crud/usuarioCRUD')
                             <div class="mb-3">
                                 <label for="usuario">Usuario:</label><br>
                                 <input type="text" id="usuario" name="usuario" class="form-control" value="<?=$rowUsuarioPorID['usuario']?>"required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="tipoUsuario">Tipo de usuario:</label>
+                                <select name="tipoUsuario" id="tipo_usuario">
+                                    <option value="gerente" <?= ($rowUsuarioPorID['tipo_usuario'] == 'gerente') ? 'selected' : '' ?>>Gerente</option>
+                                    <option value="vendedor">Vendedor</option>
+                                    <option value="gerente_estoque">Gerente de estoque</option>
+                                </select>
                             </div>
 
                             <div class="mb-3">
@@ -65,7 +74,7 @@ include('crud/usuarioCRUD')
                             <?php
                            endforeach;
                           }else{
-                            echo "<h5>Usuario não encontrado</h5>"
+                            echo "<h5>Usuario não encontrado</h5>";
                           }
                             ?>
                         </div>

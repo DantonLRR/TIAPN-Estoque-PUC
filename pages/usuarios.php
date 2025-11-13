@@ -1,7 +1,10 @@
 <?php
 
 require('../crud/conexao_DB.php');
-
+include('../crud/pesquisa_usuarios.php');
+$listaUsuario = new pesquisa;
+$buscarUsuarios = $listaUsuario->buscarUsuarios($conn);
+print_r($buscarUsuarios);
 ?>
 
 
@@ -24,7 +27,7 @@ require('../crud/conexao_DB.php');
                 <div class="card">
                     <div class="card-header">
                         <h4> Usuarios
-                            <a href="criar_usuarios.php" class="btn btn-primary float-end"> Criar Usuario</a>
+                            <a href="criar_usuario.php" class="btn btn-primary float-end"> Criar Usuario</a>
                         </h4>          
     </div>
 
@@ -43,6 +46,9 @@ require('../crud/conexao_DB.php');
                     </tr>
             </thead>
             <tbody>
+                <?php
+               foreach($buscarUsuarios as $row):
+                    ?>
                 <tr>
                     <td> <?= $row['id']?> </td>
                     <td><?= $row['usuario']?></td>
@@ -55,19 +61,16 @@ require('../crud/conexao_DB.php');
                         <a href="editarOusuario.php?id=<?= $row['id'] ?>" class="btn btn-secondary btn-sm">Editar</a>
                     </td>
                 </tr>
-
-
-
-
-
-
-
-
-
+                <?php
+                endforeach
+                ?>
             </tbody>
         </table>
-
-
+                   </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </body>
 </html>

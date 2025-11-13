@@ -1,20 +1,21 @@
 <?php
 // criar a tela de cadastro de usuarios.
-require('crud/conexao_DB.php');
+require('../crud/conexao_DB.php');
 ?>
 <!doctype html>
-< lang="pt-br">
+<html lang="pt-br">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Criar usuario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style_geral.css">
 </head>
 
 
 <body>
-    <?php include('assets/navbar/navbar.php');  ?>
+    <?php include('../assets/navbar/navbar.php');  ?>
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
@@ -25,7 +26,7 @@ require('crud/conexao_DB.php');
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form action="crud/usuarioCRUD.php" method="POST">
+                        <form action="../crud/usuarioCRUD.php" method="POST">
                             <div class="mb-3">
                                     <label for="Nome">Nome:</label><br>
                                     <input type="text" id="nome" name="nome" class="form-control"> <br>
@@ -35,7 +36,14 @@ require('crud/conexao_DB.php');
                                 <label for="usuario">Usuario:</label><br>
                                 <input type="text" id="usuario" name="usuario" class="form-control"><br>
                             </div>
-
+                            <div class="mb-3">
+                                    <label for="tipoUsuario">Tipo de usuario:</label>
+                                    <select name="tipoUsuario" id="tipo_usuario">
+                                        <option value="gerente">Gerente</option>
+                                        <option value="vendedor">Vendedor</option>
+                                        <option value="gerente_estoque">Gerente de estoque</option>
+                                </select>
+                            </div>
                             <div class="mb-3">
                                 <label for="email">E-mail:</label>
                                 <input type="email" id="email" name="email" class="form-control"><br>
