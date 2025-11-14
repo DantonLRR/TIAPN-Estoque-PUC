@@ -1,5 +1,6 @@
 <?php
-//caso exista a chave mensagem na minha SESSION, exibo a mensagem de cadastro
+//caso exista a chave mensagem na SESSION, exibo a mensagem de cadastro
+
 if (isset($_SESSION['mensagem'])):
 ?>
     <div class="alert alert-warning alert-dismissible fade show" role="alert">

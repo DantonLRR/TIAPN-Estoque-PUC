@@ -1,7 +1,7 @@
 <?php
 session_start();
 require('../crud/conexao_DB.php');
-include('../crud/pesquisa_estoque.php'); // Crie uma classe semelhante à de orçamentos
+include('../crud/pesquisa_estoque.php');
 $listaEstoque = new pesquisa;
 $buscaEstoque = $listaEstoque->buscaEstoque($conn);
 ?>

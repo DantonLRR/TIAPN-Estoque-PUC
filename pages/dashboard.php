@@ -1,12 +1,12 @@
 <?php
-//session_start();
-//if (!isset($_SESSION['user'])) {
-//    header("Location: index.php");
-//    exit();
-//}
-$_SESSION['user'] = "Danton" ;
+session_start();
+if (!isset($_SESSION['user'])) {
+    header("Location: index.php");
+    exit();
+}
 
-include('../conexao_DB.php');
+
+include('../crud/conexao_DB.php');
 
 ?>
 <!DOCTYPE html>
@@ -53,6 +53,15 @@ include('../conexao_DB.php');
                         <div class="feature-icon mb-3"><i class="bi bi-graph-up"></i></div>
                         <h5>Relatórios</h5>
                         <p>Analise relatórios e métricas do seu sistema facilmente.</p>
+                    </div>
+                </a>
+            </div>
+             <div class="col-md-4">
+                <a href="usuarios.php" class="card-action text-decoration-none">
+                    <div class="card text-center p-4">
+                        <div class="feature-icon mb-3"><i class="bi bi-graph-up"></i></div>
+                        <h5>Usuarios</h5>
+                        <p>Gerencie o usuario dos seus funcionarios.</p>
                     </div>
                 </a>
             </div>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Criar tela de cadastro de item no estoque
 require('../crud/conexao_DB.php');
 ?>
@@ -12,7 +13,7 @@ require('../crud/conexao_DB.php');
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style_geral.css">
 </head>
-
+ 
 <body>
     <?php include('../assets/navbar/navbar.php'); ?>
 
@@ -51,6 +52,7 @@ require('../crud/conexao_DB.php');
                                 <label for="preco_venda">Preço de Venda:</label>
                                 <input type="text" name="preco_venda" class="form-control" value="0.00" required>
                             </div>
+                            <?php include('../assets/mensagem/mensagem.php'); ?>
 
                             <div class="mb-3">
                                 <button type="submit" name="criar_item" class="btn btn-pink">Salvar Item</button>
