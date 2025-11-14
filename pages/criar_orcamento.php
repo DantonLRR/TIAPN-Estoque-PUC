@@ -44,10 +44,16 @@ $buscaEstoque = $listaEstoque->buscaEstoque($conn);
                                 <select name="item" id="item" class="form-control" required>
                                     <option value="">Selecione...</option>
                                     <?php foreach ($buscaEstoque as $item): ?>
-                                        <option value="<?= $item['id'] ?>">
+                                        <option value="<?= $item['id'] ?>" data-estoque="<?= $item['quantidade'] ?>">
                                             <?= $item['nome_item'] ?>
                                         </option>
                                     <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="quantidade">Quantidade:</label>
+                                <select name="quantidade" id="quantidade" class="form-control" required>
+                                    <option value="">Selecione o item primeiro...</option>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -77,4 +83,4 @@ $buscaEstoque = $listaEstoque->buscaEstoque($conn);
 </body>
 
 </html>
-<script src="js/orcamento.js" type="text/javascript"></script>
+<script src="../js/orcamento.js" type="text/javascript"></script>

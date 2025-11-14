@@ -4,13 +4,21 @@ class pesquisa
     function buscaOrcamentos($conn)
     {
         $lista = array();
-        $sql = 'SELECT * FROM orcamento_estoque ORDER BY dta_hora_orcamento ASC';
+
+        $sql = "SELECT *
+            FROM orcamento_estoque
+            WHERE status = 'Pendente'
+            ORDER BY dta_hora_orcamento ASC";
+
         $resultado = mysqli_query($conn, $sql);
+
         while ($row = mysqli_fetch_assoc($resultado)) {
-            array_push($lista, $row);
-        };
+            $lista[] = $row;
+        }
+
         return $lista;
     }
+
 
     function buscaOrcamentosPorID($conn, $ID)
     {
@@ -19,7 +27,8 @@ class pesquisa
         $resultado = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($resultado)) {
             array_push($lista, $row);
-        };
+        }
+        ;
         return $lista;
     }
 
@@ -45,7 +54,7 @@ class pesquisa
         if (count($condicoes) > 0) {
             $sql .= " WHERE " . implode(" AND ", $condicoes);
         }
-        $sql .=" ORDER BY dta_hora_orcamento ASC";
+        $sql .= " ORDER BY dta_hora_orcamento ASC";
         // echo $sql;
         $resultado = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($resultado)) {
