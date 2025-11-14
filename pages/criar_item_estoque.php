@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Criar tela de cadastro de item no estoque
 require('../crud/conexao_DB.php');
 ?>

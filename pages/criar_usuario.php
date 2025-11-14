@@ -1,4 +1,5 @@
 <?php
+session_start();
 // criar a tela de cadastro de usuarios.
 require('../crud/conexao_DB.php');
 ?>

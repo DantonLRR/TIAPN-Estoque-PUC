@@ -1,10 +1,11 @@
 <?php
+session_start();
 // criar a tela de cadastro de orçamento. A tela deve permitir também a edição.
 //Criar uma tela de pesquisa de orçamento
 //A tela de pesquisa deverá ter filtro por intervalo de datas, nome do cliente e nome do vendedor. 
 //A tela deverá conter uma tabela com os dados já filtrados e listados por ordem decrescente da data de cadastro do orçamento
 //A tela deverá conter as ações de editar e remover os orçamentos realizados
-session_start();
+
 require('crud/conexao_DB.php');
 include('crud/pesquisa_orcamentos.php');
 $listaOrcamento = new pesquisa;

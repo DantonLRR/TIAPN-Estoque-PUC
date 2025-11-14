@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require('../crud/conexao_DB.php');
 include('../crud/pesquisa_usuarios.php');
 $listaUsuario = new pesquisa;

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include('../crud/pesquisa_usuarios.php');
 include('../crud/usuarioCRUD.php');
 

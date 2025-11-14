@@ -1,4 +1,5 @@
 <?php
+session_start();
 // criar a tela de cadastro de orçamento.
 include('crud/pesquisa_orcamentos.php');
 include('crud/orcamentoCRUD.php');

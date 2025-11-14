@@ -1,6 +1,10 @@
 <?php
+session_start();
 // criar a tela de cadastro de orçamento.
 require('../crud/conexao_DB.php');
+include('../crud/pesquisa_estoque.php'); // Crie uma classe semelhante à de orçamentos
+$listaEstoque = new pesquisa;
+$buscaEstoque = $listaEstoque->buscaEstoque($conn);
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -9,12 +13,13 @@ require('../crud/conexao_DB.php');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Criar orçamentos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style_geral.css">
 </head>
 
 <body>
-    <?php include('../assets/navbar/navbar.php');  ?>
+    <?php include('../assets/navbar/navbar.php'); ?>
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
@@ -35,16 +40,28 @@ require('../crud/conexao_DB.php');
                                 <input type="text" name="vendedor" class="form-control" required>
                             </div>
                             <div class="mb-3">
+                                <label for="item">Item:</label>
+                                <select name="item" id="item" class="form-control" required>
+                                    <option value="">Selecione...</option>
+                                    <?php foreach ($buscaEstoque as $item): ?>
+                                        <option value="<?= $item['id'] ?>">
+                                            <?= $item['nome_item'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                 <label for="descricao"> Descrição:</label>
                                 <div>
-                                    <textarea name="descricao" id="" maxlength="255" rows="4" cols="50" required></textarea>
+                                    <textarea name="descricao" id="" maxlength="255" rows="4" cols="50"
+                                        required></textarea>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="valor"> Valor orçado:</label>
                                 <input type="text" id="valor" name="valor" class="form-control" required>
                             </div>
-                              <?php include('../assets/mensagem/mensagem.php'); ?>
+                            <?php include('../assets/mensagem/mensagem.php'); ?>
                             <div class="mb-3">
                                 <button type="submit" name="criar_orcamento" class="btn btn-primary"> Salvar </button>
                             </div>
@@ -54,7 +71,9 @@ require('../crud/conexao_DB.php');
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

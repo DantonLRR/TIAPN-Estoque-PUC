@@ -75,11 +75,11 @@ if (isset($_POST['deletar_orcamento'])) {
     mysqli_query($conn, $sql);
     if (mysqli_affected_rows($conn) > 0) {
         $_SESSION['mensagem'] = "Orçamento excluido com sucesso";
-        header('location:../index.php');
+          header('Location: ../pages/orcamentos.php');
         exit;
     } else {
         $_SESSION['mensagem'] = "Orçamento não foi excuido";
-        header('location:../index.php');
+         header('Location: ../pages/orcamentos.php');
         exit;
     }
 }

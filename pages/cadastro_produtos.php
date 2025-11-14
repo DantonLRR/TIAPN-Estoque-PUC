@@ -1,4 +1,5 @@
 <?php
+session_start();
 // ==================== PROCESSAMENTO DO FORMULÁRIO ====================
 // Esta parte do código será executada *antes* de o HTML ser carregado
 
