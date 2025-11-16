@@ -8,7 +8,7 @@ if (empty($_SESSION['csrf'])) $_SESSION['csrf'] = bin2hex(random_bytes(32));
 function csrf_token(){ return $_SESSION['csrf']; }
 
 $plan_id = (int)($_GET['plan_id'] ?? 0);
-$plan = buscarPlanoAtivo($pdo, $plan_id);
+$plan = buscarPlanoAtivo($conn, $plan_id);
 
 if (!$plan) {
   http_response_code(404);
