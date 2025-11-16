@@ -1,8 +1,8 @@
 /* ====== CONTAINER PRINCIPAL ====== */
-
 .checkout-wrapper {
   max-width: 1100px;      /* card grande, mas com margens laterais */
   margin: 2rem auto;      /* centraliza no meio da tela */
+
 }
 
 /* ====== CARD PRINCIPAL ====== */
@@ -10,6 +10,7 @@
 .checkout-wrapper .card {
   border-radius: 16px;
   border: 1px solid #eee;
+  
 }
 
 /* Título "Finalizar pagamento" já está com text-center no HTML,
@@ -17,17 +18,20 @@
 .checkout-wrapper h4 {
   font-size: 1.4rem;
   font-weight: 600;
+  
 }
 
 /* ====== FORM / CAMPOS ====== */
 
 .checkout-wrapper .form-label {
   font-weight: 500;
+  
 }
 
 .checkout-wrapper .form-control,
 .checkout-wrapper .form-select {
   border-radius: 10px;
+  
 }
 
 /* texto auxiliar (muted) */

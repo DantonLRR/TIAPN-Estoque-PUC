@@ -28,9 +28,11 @@ if (!$plan) {
 
   <style>
     /* opcional: garantir que o card principal fique bem grande e centralizado */
-    .checkout-wrapper {
-      max-width: 1100px;
-      margin: 2rem auto;
+    .card{
+    margin-top: 4rem;
+    }
+    .card:hover{
+    transform: none;
     }
   </style>
 </head>
