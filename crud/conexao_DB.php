@@ -1,20 +1,17 @@
 <?php
-$host = 'localhost';
-$db   = 'banco_tiapn';   // mesmo nome que você já usa
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
+// Configurações do banco de dados
+define('HOST', 'localhost'); 
+define('USUARIO', 'root');   
+define('SENHA', '');         
+define('DB', 'banco_tiapn'); 
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES => false,
-];
 
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (PDOException $e) {
-    die('Erro na conexão PDO: ' . $e->getMessage());
+$conn = mysqli_connect(HOST, USUARIO, SENHA, DB);
+
+
+if (!$conn) {
+    die('Falha na conexão com o banco de dados: ' . mysqli_connect_error());
 }
+
+mysqli_set_charset($conn,'utf8');
 ?>

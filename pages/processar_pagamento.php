@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../crud/conexao_DB.php';     // cria $pdo
+require_once __DIR__ . '/../crud/conexao_DB.php';     // cria $conn
 require_once __DIR__ . '/../crud/planos_CRUD.php';    // funções de planos
 require_once __DIR__ . '/../crud/pagamento_CRUD.php'; // funções de pagamento
 
@@ -22,7 +22,7 @@ if ($payer_name === '' || !filter_var($payer_email, FILTER_VALIDATE_EMAIL)) {
   exit;
 }
 
-$plan = buscarPlanoAtivo($pdo, $plan_id);
+$plan = buscarPlanoAtivo($conn, $plan_id);
 if (!$plan) { http_response_code(404); echo "Plano inválido ou inativo."; exit; }
 
 $amount = calcularValorPlano($plan, $billing);
@@ -36,7 +36,7 @@ if ($method === 'card') {
   $status = ($cvv !== '' && ((int)substr($cvv, -1)) % 2 === 0) ? 'approved' : 'rejected';
 }
 
-$payment_id = criarPagamento($pdo, [
+$payment_id = criarPagamento($conn, [
   'plan_id'      => $plan['id'],
   'plan_name'    => $plan['name'],
   'billing_cycle'=> $billing,

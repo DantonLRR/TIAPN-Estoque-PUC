@@ -2,11 +2,11 @@
 // ====== CONEXÃO E CRUD DOS PLANOS ======
 require_once __DIR__ . '/../crud/conexao_DB.php';
 require_once __DIR__ . '/../crud/planos_CRUD.php';
-if (!isset($pdo) || !($pdo instanceof PDO)) {
-  die('[ERRO] Conexão PDO não carregada. Verifique ../crud/conexao_DB.php');
+if (!isset($conn) || !($conn instanceof mysqli)) {
+  die('[ERRO] Conexão MySQLi não carregada. Verifique ../crud/conexao_DB.php');
 }
 
-$planos = listarPlanos($pdo, true);
+$planos = listarPlanos($conn, true);
 
 
 $ordem = ['Mensal'=>1,'Trimestral'=>2,'Semestral'=>3,'Anual'=>4];
