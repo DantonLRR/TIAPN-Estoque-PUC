@@ -27,7 +27,7 @@ if (!$plan) {
   <link rel="stylesheet" href="../css/pagamento.css">
 
   <style>
-    /* opcional: garantir que o card principal fique bem grande e centralizado */
+    /* garantir que o card principal fique bem grande e centralizado */
     .card{
     margin-top: 4rem;
     }
@@ -41,7 +41,7 @@ if (!$plan) {
 
   <div class="container checkout-wrapper">
     <div class="row justify-content-center">
-      <!-- ÚNICO CARD: FINALIZAR PAGAMENTO -->
+      <!-- Finalizar pagamento -->
       <div class="col-12">
         <div class="card shadow-sm p-4">
           <h4 class="mb-3 text-center">Finalizar pagamento</h4>
@@ -49,7 +49,7 @@ if (!$plan) {
           <form action="processar_pagamento.php" method="post" id="checkoutForm" novalidate>
             <input type="hidden" name="csrf" value="<?=htmlspecialchars(csrf_token())?>">
             <input type="hidden" name="plan_id" value="<?=$plan['id']?>">
-            <!-- ciclo fixo mensal, mas exibido como cobrança recorrente -->
+            <!-- cobrança recorrente -->
             <input type="hidden" name="billing_cycle" value="monthly">
 
             <!-- Dados básicos -->
