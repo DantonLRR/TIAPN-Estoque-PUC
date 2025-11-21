@@ -1,10 +1,17 @@
 <?php
 session_start();
+
+
+if(strtolower($_SESSION['tipo_usuario']) != 'gerente'){
+    $_SESSION['mensagem'] = "Você não tem permissão para acessar essa pagina. entre em contato com um administrador.";
+    header("Location: dashboard.php");
+}
+
 require('../crud/conexao_DB.php');
 include('../crud/pesquisa_usuarios.php');
 $listaUsuario = new pesquisa;
 $buscarUsuarios = $listaUsuario->buscarUsuarios($conn);
-print_r($buscarUsuarios);
+//print_r($buscarUsuarios);
 ?>
 
 

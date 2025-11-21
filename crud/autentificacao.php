@@ -21,7 +21,12 @@ if(isset($_POST['usuario']) || isset($_POST['senha'])){
         if($quantidade == 1){
 
             $usuario = $sql_query->fetch_assoc();
-            
+
+            if ($usuario['status'] != 1) {
+                $_SESSION['mensagem'] = "Seu usuário está inativo. Contate o administrador.";
+                header("Location: ../pages/login.php");
+                exit();
+            }            
 
             $_SESSION['id'] = $usuario['id'];
             $_SESSION['user'] = $usuario['nome'];
@@ -34,7 +39,12 @@ if(isset($_POST['usuario']) || isset($_POST['senha'])){
             header('location:../pages/login.php');
             exit();
         }
-
+        if ($usuario['status'] != 1) {
+        echo "Seu usuário está inativo. Entre em contato com o administrador.";
+        exit();
+        }
     }
 }
+
+
 ?>

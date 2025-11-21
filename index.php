@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <?php include('assets/navbar/navbar.php');  ?>
+    <?php include('assets/navbar/navbar2.php');  ?>
     <section class="hero text-center d-flex flex-column align-items-center justify-content-center">
         <div class="container mt-5 pt-5">
             <h1 class="fw-bold display-5">Gerencie Seu Estoque de Roupas<br><span class="text-pink">Com Elegância</span></h1>

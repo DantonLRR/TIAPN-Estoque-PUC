@@ -39,7 +39,8 @@ require('../crud/conexao_DB.php');
                             </div>
                             <div class="mb-3">
                                     <label for="tipoUsuario">Tipo de usuario:</label>
-                                    <select name="tipoUsuario" id="tipo_usuario">
+                                    <select name="tipo_usuario" id="tipo_usuario">
+                                        <option value="" disabled selected hidden>Selecione...</option>
                                         <option value="gerente">Gerente</option>
                                         <option value="vendedor">Vendedor</option>
                                         <option value="gerente_estoque">Gerente de estoque</option>
@@ -53,6 +54,15 @@ require('../crud/conexao_DB.php');
                             <div class="mb-3">
                                 <label for="senha">Senha: </label><br>
                                 <input type="password" id="senha" name="senha" class="form-control"><br>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="status">Status:</label>
+                                <select name="status" id="status">
+                                    <option value="" disabled selected hidden>Selecione...</option>
+                                    <option value="1">Ativo</option>
+                                    <option value="0">Inativo</option>
+                                </select>
                             </div>
 
                             <div class="mb-3">

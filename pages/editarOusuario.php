@@ -3,6 +3,7 @@ session_start();
 include('../crud/pesquisa_usuarios.php');
 include('../crud/usuarioCRUD.php');
 
+
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -23,7 +24,7 @@ include('../crud/usuarioCRUD.php');
                 <div class="card">
                     <div class="card-header">
                         <h4>Editar Usuario
-                            <a href="index.php" class="btn btn-danger float-end">Voltar</a>
+                            <a href="usuarios.php" class="btn btn-danger float-end">Voltar</a>
                         </h4>
                     </div>
                     <div class="card-body">
@@ -34,7 +35,7 @@ include('../crud/usuarioCRUD.php');
                            $pesquisaComID = $PesquisaUsuario->buscarUsuarios($conn, $usuario_id);
                            foreach($pesquisaComID as $rowUsuarioPorID):
                             ?> 
-                            <form action="crud/usuarioCRUD.php" method="POST">
+                            <form action="../crud/usuarioCRUD.php" method="POST">
                             <input type="hidden" name="id" class="form-control" value="<?=$rowUsuarioPorID['id']?>" required>
 
 
@@ -50,10 +51,11 @@ include('../crud/usuarioCRUD.php');
 
                             <div class="mb-3">
                                 <label for="tipoUsuario">Tipo de usuario:</label>
-                                <select name="tipoUsuario" id="tipo_usuario">
-                                    <option value="gerente" <?= ($rowUsuarioPorID['tipo_usuario'] == 'gerente') ? 'selected' : '' ?>>Gerente</option>
-                                    <option value="vendedor">Vendedor</option>
-                                    <option value="gerente_estoque">Gerente de estoque</option>
+                                <select name="tipo_usuario" id="tipo_usuario">
+                                    <option value="" disabled selected hidden>Selecione...</option>
+                                    <option value="gerente"<?= ($rowUsuarioPorID['tipo_usuario'] == 'gerente') ? 'selected' : '' ?>>Gerente</option>
+                                    <option value="vendedor"<?=($rowUsuarioPorID['tipo_usuario'] == 'vendedor')? 'selected' : ''?>>Vendedor</option>
+                                    <option value="gerente_estoque"<?=($rowUsuarioPorID['tipo_usuario'] == 'gerente_estoque')? 'selected' : ''?>>Gerente de estoque</option>
                                 </select>
                             </div>
 
@@ -65,6 +67,15 @@ include('../crud/usuarioCRUD.php');
                             <div class="mb-3">
                                 <label for="senha">Senha: </label><br>
                                 <input type="password" id="senha" name="senha" class="form-control" value="<?=$rowUsuarioPorID['senha']?>"required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="status">Status:</label>
+                                <select name="status" id="status">
+                                    <option value="" disabled selected hidden>Selecione...</option>
+                                    <option value="1"<?= ($rowUsuarioPorID['status'] == '1') ? 'selected' : '' ?>>Ativo</option>
+                                    <option value="0"<?= ($rowUsuarioPorID['status'] == '0') ? 'selected' : '' ?>>Inativo</option>
+                                </select>                                
                             </div>
 
                             <div class="mb-3">
