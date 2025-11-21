@@ -17,8 +17,6 @@
         <a href="../pages/logout.php" class="btn btn-outline-danger btn-sm">
             Sair
         </a>
-
-     
-
     </div>
 </nav>
+
