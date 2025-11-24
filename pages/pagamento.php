@@ -27,7 +27,6 @@ if (!$plan) {
   <link rel="stylesheet" href="../css/pagamento.css">
 
   <style>
-    /* garantir que o card principal fique bem grande e centralizado */
     .card{
     margin-top: 4rem;
     }
@@ -96,41 +95,8 @@ if (!$plan) {
                 </div>
               </div>
             </div>
-
-            <!-- Campos do cartão -->
-            <div id="cardFields" class="row g-3 d-none">
-              <div class="col-md-6">
-                <label class="form-label">Número do cartão</label>
-                <input type="text" class="form-control" name="card_number" inputmode="numeric" maxlength="19">
-              </div>
-              <div class="col-md-3">
-                <label class="form-label">Validade</label>
-                <input type="text" class="form-control" name="card_exp" placeholder="MM/AA">
-              </div>
-              <div class="col-md-3">
-                <label class="form-label">CVV</label>
-                <input type="password" class="form-control" name="card_cvv" maxlength="4" inputmode="numeric">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Nome impresso</label>
-                <input type="text" class="form-control" name="card_name">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Parcelas</label>
-                <select name="installments" class="form-select">
-                  <option value="1">À vista</option>
-                  <option value="2">2x</option>
-                  <option value="3">3x</option>
-                  <option value="4">4x</option>
-                  <option value="5">5x</option>
-                  <option value="6">6x</option>
-                </select>
-              </div>
-            </div>
-
             <hr class="my-4">
 
-            <!-- Total + botão -->
             <div class="d-flex align-items-center justify-content-between">
               <div>
                 <div class="muted">Total estimado</div>
@@ -150,15 +116,6 @@ if (!$plan) {
   </div>
 
   <script>
-    const payCard = document.getElementById('payCard');
-    const cardFields = document.getElementById('cardFields');
-
-    // mostra/esconde campos do cartão
-    document.querySelectorAll('input[name="method"]').forEach(r => {
-      r.addEventListener('change', () => {
-        cardFields.classList.toggle('d-none', !payCard.checked);
-      });
-    });
 
     // total estimado fixo mensal (servidor ainda recalcula)
     const totalPreview = document.getElementById('totalPreview');
