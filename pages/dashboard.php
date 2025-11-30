@@ -8,6 +8,14 @@ if (!isset($_SESSION['user'])) {
 
 include('../crud/conexao_DB.php');
 
+function showCard($allowed = []){
+    if (empty($allowed)) return true;
+    if (!isset($_SESSION['tipo_usuario'])) return false;
+    $tipo = strtolower($_SESSION['tipo_usuario']);
+    $allowed_lower = array_map('strtolower', $allowed);
+    return in_array($tipo, $allowed_lower);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -27,6 +35,7 @@ include('../crud/conexao_DB.php');
         <p>Escolha uma das opções abaixo para continuar:</p>
 
         <div class="row g-4 mt-4">
+            <?php if (showCard(['gerente','vendedor'])): ?>
             <div class="col-md-4">
                 <a href="orcamentos.php" class="card-action text-decoration-none">
                     <div class="card text-center p-4">
@@ -36,7 +45,9 @@ include('../crud/conexao_DB.php');
                     </div>
                 </a>
             </div>
+            <?php endif; ?>
 
+            <?php if (showCard(['gerente','vendedor','gerente_estoque'])): ?>
             <div class="col-md-4">
                 <a href="gerenciar_estoque.php" class="card-action text-decoration-none">
                     <div class="card text-center p-4">
@@ -46,7 +57,9 @@ include('../crud/conexao_DB.php');
                     </div>
                 </a>
             </div>
+            <?php endif; ?>
 
+            <?php if (showCard(['gerente','vendedor','gerente_estoque'])): ?>
             <div class="col-md-4">
                 <a href="relatorios.php" class="card-action text-decoration-none">
                     <div class="card text-center p-4">
@@ -56,16 +69,28 @@ include('../crud/conexao_DB.php');
                     </div>
                 </a>
             </div>
-             <div class="col-md-4">
-                <a href="usuarios.php" class="card-action text-decoration-none">
+            <?php endif; ?>
+            <?php if (showCard(['gerente'])): ?>
+            <div class="col-md-4">
+               <a href="usuarios.php" class="card-action text-decoration-none">
+                   <div class="card text-center p-4">
+                       <div class="feature-icon mb-3"><i class="bi bi-graph-up"></i></div>
+                       <h5>Usuarios</h5>
+                       <p>Gerencie o usuario dos seus funcionarios.</p>
+                   </div>
+               </a>
+           </div>
+           <?php endif; ?>
+            <?php if (showCard(['gerente','vendedor'])): ?>
+            <div class="col-md-4">
+                <a href="clientes.php" class="card-action text-decoration-none">
                     <div class="card text-center p-4">
                         <div class="feature-icon mb-3"><i class="bi bi-graph-up"></i></div>
-                        <h5>Usuarios</h5>
-                        <p>Gerencie o usuario dos seus funcionarios.</p>
-                    </div>
-                </a>
+                        <h5>Clientes</h5>
+                        <p>Gerencie os seus clientes.</p>
+                    </div>   
             </div>
-        </div>
+            <?php endif; ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

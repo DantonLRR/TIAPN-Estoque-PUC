@@ -2,6 +2,12 @@
 session_start();
 // criar a tela de cadastro de usuarios.
 require('../crud/conexao_DB.php');
+
+$require_path = '../crud/verifica_tipo.php';
+if (file_exists(__DIR__ . '/../crud/verifica_tipo.php')) {
+    require($require_path);
+    verifica_tipo(['gerente']);
+}
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -38,7 +44,7 @@ require('../crud/conexao_DB.php');
                                 <input type="text" id="usuario" name="usuario" class="form-control"><br>
                             </div>
                             <div class="mb-3">
-                                    <label for="tipoUsuario">Tipo de usuario:</label>
+                                    <label for="tipo_usuario">Tipo de usuario:</label>
                                     <select name="tipo_usuario" id="tipo_usuario">
                                         <option value="" disabled selected hidden>Selecione...</option>
                                         <option value="gerente">Gerente</option>

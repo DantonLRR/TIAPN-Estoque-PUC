@@ -3,6 +3,11 @@ session_start();
 include('../crud/pesquisa_usuarios.php');
 include('../crud/usuarioCRUD.php');
 
+$require_path = '../crud/verifica_tipo.php';
+if (file_exists(__DIR__ . '/../crud/verifica_tipo.php')) {
+    require($require_path);
+    verifica_tipo(['gerente']);
+}
 
 ?>
 <!doctype html>

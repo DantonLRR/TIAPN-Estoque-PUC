@@ -3,6 +3,12 @@ session_start();
 // criar a tela de cadastro de orçamento.
 require('../crud/conexao_DB.php');
 include('../crud/pesquisa_estoque.php'); // Crie uma classe semelhante à de orçamentos
+
+$require_path = '../crud/verifica_tipo.php';
+if (file_exists(__DIR__ . '/../crud/verifica_tipo.php')) {
+    require($require_path);
+    verifica_tipo(['gerente','vendedor']);
+}
 $listaEstoque = new pesquisa;
 $buscaEstoque = $listaEstoque->buscaEstoque($conn);
 ?>

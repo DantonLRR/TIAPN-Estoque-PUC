@@ -4,6 +4,12 @@ session_start();
 include('crud/pesquisa_orcamentos.php');
 include('crud/orcamentoCRUD.php');
 
+$require_path = '../crud/verifica_tipo.php';
+if (file_exists(__DIR__ . '/../crud/verifica_tipo.php')) {
+    require($require_path);
+    verifica_tipo(['gerente','vendedor']);
+}
+
 ?>
 <!doctype html>
 <html lang="pt-br">

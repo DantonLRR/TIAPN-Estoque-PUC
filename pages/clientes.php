@@ -4,24 +4,23 @@ session_start();
 $require_path = '../crud/verifica_tipo.php';
 if (file_exists(__DIR__ . '/../crud/verifica_tipo.php')) {
     require($require_path);
-    verifica_tipo(['gerente']);
+    verifica_tipo(['gerente','vendedor']);
 }
 
-include('../crud/pesquisa_usuarios.php');
-$listaUsuario = new pesquisa;
-$buscarUsuarios = $listaUsuario->buscarUsuarios($conn);
-//print_r($buscarUsuarios);
+
+
+include('../crud/pesquisa_clientes.php');
+$listaCliente = new pesquisa;
+$buscarClientes = $listaCliente->buscarClientes($conn);
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <title>Clientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style_geral.css">
 </head>
 <body>
@@ -32,39 +31,41 @@ $buscarUsuarios = $listaUsuario->buscarUsuarios($conn);
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4> Usuarios
-                            <a href="criar_usuario.php" class="btn btn-primary float-end"> Criar Usuario</a>
-                        </h4>          
-    </div>
+                        <h4> Clientes
+                            <a href="criar_cliente.php" class="btn btn-primary float-end"> Criar Cliente</a>
+                        </h4>
+                    </div>
 
     <div class="card-body">
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
-                     <th>Usuario</th>
-                     <th>Nome</th>
-                     <th>Tipo usuario</th>
-                     <th>E-mail</th>
-                     <th>Senha</th>
-                     <th>Status</th>
-                     <th>Açoes</th>
-                    </tr>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th>CPF/CNPJ</th>
+                    <th>E-mail</th>
+                    <th>Cidade</th>
+                    <th>Estado</th>
+                    <th>Data Cadastro</th>
+                    <th>Ações</th>
+                </tr>
             </thead>
             <tbody>
                 <?php
-               foreach($buscarUsuarios as $row):
+               foreach($buscarClientes as $row):
                     ?>
                 <tr>
                     <td> <?= $row['id']?> </td>
-                    <td><?= $row['usuario']?></td>
                     <td><?= $row['nome']?></td>
-                    <td><?= $row['tipo_usuario']?></td>
+                    <td><?= isset($row['tipo_cliente']) ? $row['tipo_cliente'] : '' ?></td>
+                    <td><?= (!empty($row['cpf'])) ? $row['cpf'] : $row['cnpj'] ?></td>
                     <td><?= $row['email']?></td>
-                    <td><?= $row['senha']?></td>
-                    <td><?= ($row['status'] == 1) ? 'ativo' : 'inativo' ?></td>
+                    <td><?= $row['cidade']?></td>
+                    <td><?= $row['estado']?></td>
+                    <td><?= $row['data_cadastro']?></td>
                     <td>
-                        <a href="editarOusuario.php?id=<?= $row['id'] ?>" class="btn btn-secondary btn-sm">Editar</a>
+                        <a href="editarOcliente.php?id=<?= $row['id'] ?>" class="btn btn-secondary btn-sm">Editar</a>
                     </td>
                 </tr>
                 <?php

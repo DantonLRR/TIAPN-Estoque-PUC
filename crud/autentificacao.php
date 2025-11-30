@@ -30,6 +30,7 @@ if(isset($_POST['usuario']) || isset($_POST['senha'])){
 
             $_SESSION['id'] = $usuario['id'];
             $_SESSION['user'] = $usuario['nome'];
+            $_SESSION['tipo_usuario'] = isset($usuario['tipo_usuario']) ? strtolower($usuario['tipo_usuario']) : null;
 
             header("Location: ../pages/dashboard.php");
             exit();

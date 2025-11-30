@@ -2,6 +2,12 @@
 session_start();
 // Criar tela de cadastro de item no estoque
 require('../crud/conexao_DB.php');
+
+$require_path = '../crud/verifica_tipo.php';
+if (file_exists(__DIR__ . '/../crud/verifica_tipo.php')) {
+    require($require_path);
+    verifica_tipo(['gerente','vendedor','gerente_estoque']);
+}
 ?>
 <!doctype html>
 <html lang="pt-BR">

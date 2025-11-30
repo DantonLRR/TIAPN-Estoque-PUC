@@ -15,12 +15,11 @@
         <div class="container mt-5 pt-5">
             <h1 class="fw-bold display-5">Gerencie Seu Estoque de Roupas<br><span class="text-pink">Com Elegância</span></h1>
             <p class="text-muted mt-3">Sistema completo para controle de inventário, gestão de produtos e análise de vendas para sua loja de moda.</p>
-            <a href="cadastro.php" class="btn btn-pink mt-4 px-4 py-2">Começar Agora</a>
+            <a href="pages/planos.php" class="btn btn-pink mt-4 px-4 py-2">Começar Agora</a>
             <a href="pages/login.php" class="btn btn-pink mt-4 px-4 py-2">Entrar</a>
         </div>
     </section>
 
-    <!-- Cards -->
     <section class="features py-5">
         <div class="container">
             <div class="row g-4">

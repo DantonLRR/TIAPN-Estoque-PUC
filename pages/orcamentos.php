@@ -2,8 +2,18 @@
 session_start();
 require('../crud/conexao_DB.php');
 include('../crud/pesquisa_orcamentos.php');
+
+
+$require_path = '../crud/verifica_tipo.php';
+if (file_exists(__DIR__ . '/../crud/verifica_tipo.php')) {
+    require($require_path);
+    verifica_tipo(['gerente','vendedor']);
+}
+
 $listaOrcamento = new pesquisa;
 $buscaOrcamentos = $listaOrcamento->buscaOrcamentos($conn);
+
+
 ?>
 <!doctype html>
 <html lang="pt-br">

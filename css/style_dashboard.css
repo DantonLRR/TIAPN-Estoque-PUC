@@ -24,7 +24,6 @@ body {
     margin-bottom: 10px;
 }
 
-.card p {
-    font-size: 0.9rem;
-    color: #555;
+.card  {
+ border:#ec407a;
 }
