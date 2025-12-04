@@ -7,7 +7,7 @@ include('../crud/pesquisa_estoque.php');
 $require_path = '../crud/verifica_tipo.php';
 if (file_exists(__DIR__ . '/../crud/verifica_tipo.php')) {
     require($require_path);
-    verifica_tipo(['gerente','vendedor','gerente_estoque']);
+    verifica_tipo(['gerente', 'vendedor', 'gerente_estoque']);
 }
 
 $listaEstoque = new pesquisa;
@@ -63,22 +63,31 @@ $buscaEstoque = $listaEstoque->buscaEstoque($conn);
                                         <td>R$ <?= number_format($item['preco_venda'], 2, ',', '.') ?></td>
                                         <td>
                                             <!-- Botão Editar -->
-                                            <a href="editar_item_estoque.php?id=<?= $item['id'] ?>" class="btn btn-secondary btn-sm mb-1">Editar</a>
+                                            <form action="../crud/estoqueCRUD.php" method="POST" class="d-inline">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-secondary btn-sm mb-1"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalEditar"
+                                                    onclick="carregarDados(
+                                                                            '<?= $item['id'] ?>',
+                                                                            '<?= addslashes($item['nome_item']) ?>',
+                                                                            '<?= addslashes($item['descricao']) ?>',
+                                                                            '<?= $item['quantidade'] ?>',
+                                                                            '<?= $item['preco_custo'] ?>',
+                                                                            '<?= $item['preco_venda'] ?>'
+                                                                        )">
+                                                    Editar
+                                                </button>
+                                            </form>
 
-                                            <!-- Botão Adicionar Quantidade -->
-                                            <a href="adicionar_estoque.php?id=<?= $item['id'] ?>" class="btn btn-pink btn-sm mb-1">Adicionar</a>
-
-                                            <!-- Botão Remover Quantidade -->
-                                            <a href="remover_estoque.php?id=<?= $item['id'] ?>" class="btn btn-warning btn-sm mb-1">Remover</a>
-
-                                            <!-- Botão Excluir -->
                                             <form action="../crud/estoqueCRUD.php" method="POST" class="d-inline">
                                                 <button type="submit" onclick="return confirm('Deseja realmente excluir este item?')" name="deletar_item" value="<?= $item['id'] ?>" class="btn btn-danger btn-sm mb-1">Excluir</button>
                                             </form>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
-                                <?php if(empty($buscaEstoque)) : ?>
+                                <?php if (empty($buscaEstoque)) : ?>
                                     <tr>
                                         <td colspan="7" class="text-center text-muted">Nenhum item cadastrado no estoque.</td>
                                     </tr>
@@ -89,9 +98,58 @@ $buscaEstoque = $listaEstoque->buscaEstoque($conn);
                 </div>
             </div>
         </div>
+        <!-- MODAL DE EDIÇÃO -->
+        <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="../crud/estoqueCRUD.php" method="POST">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Editar Item do Estoque</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <input type="hidden" name="id" id="edit-id">
+
+                            <div class="mb-3">
+                                <label>Nome do Item</label>
+                                <input type="text" name="nome_item" id="edit-nome" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Descrição</label>
+                                <textarea name="descricao" id="edit-descricao" class="form-control" required></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Quantidade</label>
+                                <input type="number" min="0" name="quantidade" id="edit-quantidade" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Preço de Custo</label>
+                                <input type="text" name="preco_custo" id="edit-custo" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Preço de Venda</label>
+                                <input type="text" name="preco_venda" id="edit-venda" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" name="editar_item" class="btn btn-primary">Salvar Alterações</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/estoque.js" type="text/javascript"></script>
 </body>
 
 </html>

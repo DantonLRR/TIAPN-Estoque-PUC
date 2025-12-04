@@ -39,41 +39,80 @@ if (isset($_POST['criar_item'])) {
 // EDITAR ITEM NO ESTOQUE
 // ============================
 if (isset($_POST['editar_item'])) {
-    $id = trim($_POST['id']);
-    $nome_item = trim($_POST['nome_item']);
-    $descricao = trim($_POST['descricao']);
+    session_start();
+
+    $id         = trim($_POST['id']);
+    $nome       = trim($_POST['nome_item']);
+    $descricao  = trim($_POST['descricao']);
     $quantidade = trim($_POST['quantidade']);
-    $preco_custo = trim($_POST['preco_custo']);
-    $preco_venda = trim($_POST['preco_venda']);
+    $custo      = trim($_POST['preco_custo']);
+    $venda      = trim($_POST['preco_venda']);
 
-    // Verifica se os valores são numéricos
-    if (!is_numeric($quantidade) || !is_numeric($preco_custo) || !is_numeric($preco_venda)) {
-        $_SESSION['mensagem'] = 'Erro: Quantidade e preços devem ser números válidos.';
-        header('Location: ../pages/gerenciar_estoque.php');
-        exit;
-    }
+    // Usuário logado responsável pela alteração
+    $usuario = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : 'desconhecido';
 
-    $sql = "UPDATE estoque SET 
-                nome_item = '$nome_item',
-                descricao = '$descricao',
-                quantidade = '$quantidade',
-                preco_custo = '$preco_custo',
-                preco_venda = '$preco_venda',
-                data_atualizacao = SYSDATE()
-            WHERE id = '$id'";
+    // 1️⃣ Buscar quantidade antiga
+    $sql_old = "SELECT quantidade FROM estoque WHERE id = '$id'";
+    $res_old = mysqli_query($conn, $sql_old);
+    $dados_old = mysqli_fetch_assoc($res_old);
+    $quant_old = $dados_old['quantidade'];
 
-    mysqli_query($conn, $sql);
+    // 2️⃣ Atualizar o item no estoque
+    $sql_update = "UPDATE estoque SET 
+                        nome_item='$nome',
+                        descricao='$descricao',
+                        quantidade='$quantidade',
+                        preco_custo='$custo',
+                        preco_venda='$venda'
+                    WHERE id='$id'";
 
+    mysqli_query($conn, $sql_update);
+
+    // 3️⃣ Verificar se realmente alterou algo
     if (mysqli_affected_rows($conn) > 0) {
-        $_SESSION['mensagem'] = 'Item atualizado com sucesso!';
-        header('Location: ../pages/gerenciar_estoque.php');
-        exit;
+
+        // 4️⃣ Calcular diferença (+ ou -)
+        // Calcula a diferença
+        $diferenca_num = $quantidade - $quant_old;
+
+        // Converte para string com sinal
+        if ($diferenca_num > 0) {
+            $diferenca = "+" . $diferenca_num;
+        } else {
+            $diferenca = (string)$diferenca_num; // negativo já vem com sinal
+        }
+
+        // Ex: 50 - 20 = +30 | 10 - 40 = -30
+
+        // 5️⃣ Identificar tipo
+        if ($diferenca > 0) {
+            $tipo = "Entrada";
+        } elseif ($diferenca < 0) {
+            $tipo = "Saída";
+        } else {
+            $tipo = "Edição";
+        }
+
+        // 6️⃣ Inserir no log
+        $sql_log = "INSERT INTO log_estoque 
+                        (id_item, quantidade_anterior, quantidade_nova, diferenca, tipo_movimentacao, usuario)
+                    VALUES 
+                        ('$id', '$quant_old', '$quantidade', '$diferenca', '$tipo', '$usuario')";
+
+        mysqli_query($conn, $sql_log);
+
+        $_SESSION['mensagem'] = "Item atualizado com sucesso!";
     } else {
-        $_SESSION['mensagem'] = 'Nenhuma alteração realizada.';
-        header('Location: ../pages/gerenciar_estoque.php');
-        exit;
+        $_SESSION['mensagem'] = "Nenhuma alteração realizada.";
     }
+
+    // 7️⃣ Redirecionar
+    header("Location: ../pages/gerenciar_estoque.php");
+    exit;
 }
+
+
+
 
 // ============================
 // DELETAR ITEM DO ESTOQUE
@@ -167,4 +206,3 @@ if (isset($_POST['remover_qtd'])) {
         exit;
     }
 }
-?>
