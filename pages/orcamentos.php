@@ -7,7 +7,7 @@ include('../crud/pesquisa_orcamentos.php');
 $require_path = '../crud/verifica_tipo.php';
 if (file_exists(__DIR__ . '/../crud/verifica_tipo.php')) {
     require($require_path);
-    verifica_tipo(['gerente','vendedor']);
+    verifica_tipo(['gerente', 'vendedor']);
 }
 
 $listaOrcamento = new pesquisa;
@@ -29,7 +29,6 @@ $buscaOrcamentos = $listaOrcamento->buscaOrcamentos($conn);
 
 <body>
     <?php include('../assets/navbar/navbar.php'); ?>
-    <?php include('../assets/CampoDePesquisa/formPesquisa.php'); ?>
     <div class="container mt-4">
         <?php include('../assets/mensagem/mensagem.php'); ?>
         <div class="row">
@@ -37,42 +36,41 @@ $buscaOrcamentos = $listaOrcamento->buscaOrcamentos($conn);
                 <div class="card">
                     <div class="card-header">
                         <h4> Orçamentos
-                            <a href="criar_orcamento.php" class="btn btn-primary float-end"> Criar Orçamento</a>
+                            <a href="criar_orcamento.php" class="btn btn-pink float-end"> Criar Orçamento</a>
                         </h4>
 
                     </div>
-                    <!-- pagina de pesquisa-->
                     <div class="card-body">
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Cliente</th>
-                                    <th>item</th>
-                                     <th>Quantidade</th>
-                                    <th>valor orçado</th>
+                                    <th>Item</th>
+                                    <th>Quantidade</th>
+                                    <th>Valor orçado</th>
                                     <th>Data e Hora</th>
-                                    <th>vendedor</th>
-                                    <th>descriçao</th>
-                                    <th>Açoes</th>
+                                    <th>Vendedor</th>
+                                    <th>Descriçao</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 foreach ($buscaOrcamentos as $row):
-                                    ?>
+                                ?>
                                     <tr>
                                         <td> <?= $row['id'] ?></td>
                                         <td> <?= $row['cliente'] ?></td>
-                                          <td> <?= $row['nome_item'] ?></td>
-                                             <td> <?= $row['quantidade'] ?></td>
-                                          <td> <?= $row['valor_orcado'] ?></td>
-                                        <td> <?= date('Y-m-d H:i:s', strtotime($row['dta_hora_orcamento'])) ?></td>
+                                        <td> <?= $row['nome_item'] ?></td>
+                                        <td> <?= $row['quantidade'] ?></td>
+                                        <td> <?= $row['valor_orcado'] ?></td>
+                                        <td><?= date('d/m/Y H:i:s', strtotime($row['dta_hora_orcamento'])) ?></td>
                                         <td> <?= $row['vendedor'] ?></td>
                                         <td> <?= $row['descricao'] ?></td>
-                                        <td> <?= $row['valor_orcado'] ?></td>
+                                        <td> <?= $row['status'] ?></td>
                                         <td>
-                                            <!-- <a href="editarOrcamento.php?id=<?//= $row['id'] ?>" class="btn btn-secondary btn-sm">Editar</a> -->
                                             <form action="../crud/orcamentoCRUD.php" method="POST" class="d-inline">
                                                 <button type="submit"
                                                     onclick="return confirm('Deseja realmente excuir este orçamento?')"
@@ -87,7 +85,7 @@ $buscaOrcamentos = $listaOrcamento->buscaOrcamentos($conn);
                                             </form>
                                         </td>
                                     </tr>
-                                    <?php
+                                <?php
                                 endforeach;
                                 ?>
                             </tbody>

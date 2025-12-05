@@ -1,75 +1,49 @@
 <?php
 session_start();
 require('conexao_DB.php');
-//essa pagina só será acessada via requisiçao POST
-//verificando se a chave criar_orcamento existe no meu POST quando a pagina for chamada
-// if (isset($_POST['criar_orcamento'])) {
-//     $cliente = trim($_POST['cliente']);
-//     $vendedor = trim($_POST['vendedor']);
-//     $descricao = trim($_POST['descricao']);
-//     $valor = trim($_POST['valor']);
-//     // Verifica se é um número válido 
-//     if (!is_numeric($valor)) {
-//         // Retorna mensagem informando o erro
-//         $_SESSION['mensagem'] = 'Valor orçado inválido. Digite apenas números.';
-//         header('Location: ../pages/criar_orcamento.php');
-//         exit;
-//     }
-//     $sql = "INSERT INTO orcamento_estoque(cliente, dta_hora_orcamento, vendedor, descricao, valor_orcado) 
-//                                     VALUES('$cliente', SYSDATE(), '$vendedor', '$descricao', '$valor')";
-//     //echo $sql;
-//     // Faço o insert no banco 
-//     mysqli_query($conn, $sql);
-//     if (mysqli_affected_rows($conn) > 0) {
-//         // redireciono para index e crio uma mensagem para ser exibida para o usuario 
-//         $_SESSION['mensagem'] = 'Orçamento Criado com sucesso';
-//         header('location:../pages/criar_orcamento.php');
-//         exit;
-//     } else {
-//         $_SESSION['mensagem'] = 'Orçamento não pode ser criado Procure o administrador';
-//         header('location:../pages/criar_orcamento.php');
-//         exit;
-//     }
-// }
 
 if (isset($_POST['criar_orcamento'])) {
 
     session_start();
 
-    $cliente = trim($_POST['cliente']);
+    $cliente = trim($_POST['cliente']);      // <-- ID do cliente
+    $doc_cliente = trim($_POST['doc_cliente']);
     $vendedor = trim($_POST['vendedor']);
     $descricao = trim($_POST['descricao']);
     $valor = trim($_POST['valor']);
-
-    // novos campos
-    $item = trim($_POST['item']); // ID do item
+    $item = trim($_POST['item']);
     $quantidade = trim($_POST['quantidade']);
 
-    // Verifica se valor é numero
+    // validações
     if (!is_numeric($valor)) {
         $_SESSION['mensagem'] = 'Valor orçado inválido. Digite apenas números.';
         header('Location: ../pages/criar_orcamento.php');
         exit;
     }
 
-    // Verifica se quantidade e item foram selecionados
     if (empty($item) || empty($quantidade)) {
         $_SESSION['mensagem'] = 'Selecione um item e uma quantidade válida.';
         header('Location: ../pages/criar_orcamento.php');
         exit;
     }
 
-    // Buscar o nome do item pelo ID
+    // Buscar nome do item
     $sqlNome = "SELECT nome_item FROM estoque WHERE id = '$item' LIMIT 1";
     $resultNome = mysqli_query($conn, $sqlNome);
     $dados = mysqli_fetch_assoc($resultNome);
     $nome_item = $dados['nome_item'];
 
+    // Buscar nome do cliente
+    $sqlCliente = "SELECT nome FROM clientes WHERE id = '$cliente' LIMIT 1";
+    $resultCliente = mysqli_query($conn, $sqlCliente);
+    $dadosCliente = mysqli_fetch_assoc($resultCliente);
+    $nome_cliente = $dadosCliente['nome'];
 
+    // INSERT atualizado
     $sql = "INSERT INTO orcamento_estoque 
-            (cliente, dta_hora_orcamento, vendedor, descricao, valor_orcado, id_item, nome_item, quantidade)
+            (cliente, idcliente, doc_cliente, dta_hora_orcamento, vendedor, descricao, valor_orcado, id_item, nome_item, quantidade)
             VALUES
-            ('$cliente', SYSDATE(), '$vendedor', '$descricao', '$valor', '$item', '$nome_item', '$quantidade')";
+            ('$nome_cliente', '$cliente', '$doc_cliente', SYSDATE(), '$vendedor', '$descricao', '$valor', '$item', '$nome_item', '$quantidade')";
 
     mysqli_query($conn, $sql);
 
@@ -83,6 +57,8 @@ if (isset($_POST['criar_orcamento'])) {
         exit;
     }
 }
+
+
 
 
 if (isset($_POST['editar_orcamento'])) {
@@ -122,20 +98,6 @@ if (isset($_POST['editar_orcamento'])) {
     }
 }
 
-// if (isset($_POST['deletar_orcamento'])) {
-//     $id = trim($_POST['deletar_orcamento']);
-//     $sql = "DELETE FROM orcamento_estoque WHERE id='$id'";
-//     mysqli_query($conn, $sql);
-//     if (mysqli_affected_rows($conn) > 0) {
-//         $_SESSION['mensagem'] = "Orçamento excluido com sucesso";
-//           header('Location: ../pages/orcamentos.php');
-//         exit;
-//     } else {
-//         $_SESSION['mensagem'] = "Orçamento não foi excuido";
-//          header('Location: ../pages/orcamentos.php');
-//         exit;
-//     }
-// }
 
 if (isset($_POST['cancelar_orcamento'])) {
 

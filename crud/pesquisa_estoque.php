@@ -1,5 +1,5 @@
 <?php
-class pesquisa
+class pesquisaEstoque
 {
     function buscaEstoque($conn)
     {

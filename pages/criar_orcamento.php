@@ -3,14 +3,21 @@ session_start();
 // criar a tela de cadastro de orçamento.
 require('../crud/conexao_DB.php');
 include('../crud/pesquisa_estoque.php'); // Crie uma classe semelhante à de orçamentos
-
+include('../crud/pesquisa_clientes.php');
 $require_path = '../crud/verifica_tipo.php';
 if (file_exists(__DIR__ . '/../crud/verifica_tipo.php')) {
     require($require_path);
-    verifica_tipo(['gerente','vendedor']);
+    verifica_tipo(['gerente', 'vendedor']);
 }
-$listaEstoque = new pesquisa;
+$listaEstoque = new pesquisaEstoque;
 $buscaEstoque = $listaEstoque->buscaEstoque($conn);
+
+$Clientes = new pesquisa;
+$listaClientes = $Clientes->buscarClientesSimples($conn);
+
+
+$vendedorLogado = $_SESSION['user'];
+
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -38,45 +45,83 @@ $buscaEstoque = $listaEstoque->buscaEstoque($conn);
                     <div class="card-body">
                         <form action="../crud/orcamentoCRUD.php" method="POST">
                             <div class="mb-3">
-                                <label for="cliente">Cliente: </label>
-                                <input type="text" name="cliente" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="vendedor"> Vendedor: </label>
-                                <input type="text" name="vendedor" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="item">Item:</label>
-                                <select name="item" id="item" class="form-control" required>
+                                <label for="cliente">Cliente:</label>
+                                <select name="cliente" id="cliente" class="form-control" required>
                                     <option value="">Selecione...</option>
-                                    <?php foreach ($buscaEstoque as $item): ?>
-                                        <option value="<?= $item['id'] ?>" data-estoque="<?= $item['quantidade'] ?>">
-                                            <?= $item['nome_item'] ?>
+
+                                    <?php foreach ($listaClientes as $c): ?>
+                                        <option
+                                            value="<?= $c['id'] ?>"
+                                            data-tipo="<?= strtolower($c['tipo_cliente']) ?>"
+                                            data-cpf="<?= $c['cpf'] ?>"
+                                            data-cnpj="<?= $c['cnpj'] ?>">
+                                            <?= $c['nome'] ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="quantidade">Quantidade:</label>
-                                <select name="quantidade" id="quantidade" class="form-control" required>
-                                    <option value="">Selecione o item primeiro...</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="descricao"> Descrição:</label>
-                                <div>
-                                    <textarea name="descricao" id="" maxlength="255" rows="4" cols="50"
-                                        required></textarea>
+                                <div class="mb-3 mt-2">
+                                    <label>CPF/CNPJ:</label>
+                                    <input type="text" id="doc_cliente" name="doc_cliente" class="form-control" readonly>
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="valor"> Valor orçado:</label>
-                                <input type="text" id="valor" name="valor" class="form-control" required>
-                            </div>
-                            <?php include('../assets/mensagem/mensagem.php'); ?>
-                            <div class="mb-3">
-                                <button type="submit" name="criar_orcamento" class="btn btn-primary"> Salvar </button>
-                            </div>
+                                <div class="mb-3">
+                                    <label for="vendedor">Vendedor:</label>
+                                    <input type="text" name="vendedor" class="form-control"
+                                        value="<?= $vendedorLogado ?>" readonly>
+                                </div>
+
+                                <!-- <div class="mb-3">
+                                    <label for="item">Item:</label>
+                                    <select name="item" id="item" class="form-control" required>
+                                        <option value="">Selecione...</option>
+                                        <?php foreach ($buscaEstoque as $item): ?>
+                                            <option value="<?= $item['id'] ?>" data-estoque="<?= $item['quantidade'] ?>">
+                                                <?= $item['nome_item'] ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div> -->
+                                <div class="mb-3">
+                                    <label for="item">Item:</label>
+                                    <select name="item" id="item" class="form-control" required>
+                                        <option value="">Selecione...</option>
+
+                                        <?php foreach ($buscaEstoque as $item): ?>
+                                            <option
+                                                value="<?= $item['id'] ?>"
+                                                data-estoque="<?= $item['quantidade'] ?>"
+                                                data-preco="<?= $item['preco_venda'] ?>">
+                                                <?= $item['nome_item'] ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label>Preço unitário (R$):</label>
+                                    <input type="text" id="preco_item" class="form-control" readonly>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="quantidade">Quantidade:</label>
+                                    <select name="quantidade" id="quantidade" class="form-control" required>
+                                        <option value="">Selecione o item primeiro...</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="descricao"> Descrição:</label>
+                                    <div>
+                                        <textarea name="descricao" id="" maxlength="255" rows="4" cols="50"
+                                            required></textarea>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="valor"> Valor orçado:</label>
+                                    <input type="text" id="valor" name="valor" class="form-control" required>
+                                </div>
+                                <?php include('../assets/mensagem/mensagem.php'); ?>
+                                <div class="mb-3">
+                                    <button type="submit" name="criar_orcamento" class="btn btn-primary"> Salvar </button>
+                                </div>
                         </form>
                     </div>
                 </div>
@@ -86,7 +131,7 @@ $buscaEstoque = $listaEstoque->buscaEstoque($conn);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
         crossorigin="anonymous"></script>
+    <script src="../js/orcamento.js"></script>
 </body>
 
 </html>
-<script src="../js/orcamento.js" type="text/javascript"></script>

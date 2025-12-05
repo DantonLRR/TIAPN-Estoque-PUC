@@ -10,7 +10,7 @@ if (file_exists(__DIR__ . '/../crud/verifica_tipo.php')) {
     verifica_tipo(['gerente', 'vendedor', 'gerente_estoque']);
 }
 
-$listaEstoque = new pesquisa;
+$listaEstoque = new pesquisaEstoque;
 $buscaEstoque = $listaEstoque->buscaEstoque($conn);
 ?>
 <!DOCTYPE html>
