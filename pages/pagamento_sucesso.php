@@ -29,7 +29,6 @@ function enviarSenhaPorEmail(string $email, string $nome, string $senha_temporar
     try {
         $mail = new PHPMailer(true);
         $mail->isSMTP();
-
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'estoqueideal33@gmail.com';       // remetente
@@ -40,7 +39,7 @@ function enviarSenhaPorEmail(string $email, string $nome, string $senha_temporar
         $mail->CharSet = 'UTF-8';
 
         // Remetente e destinatário
-        $mail->setFrom('estoqueideal33@gmail.com', 'Seu Sistema');
+        $mail->setFrom('estoqueideal33@gmail.com', 'estoqueideal');
         $mail->addAddress($email, $nome);
 
         // Conteúdo
@@ -107,8 +106,7 @@ if (isset($_GET['reenviar_senha'], $_GET['email'])) {
     $loginUrl  = "http://localhost/TIAPN-Estoque-PUC/pages/login.php";
 
     // Enviar e-mail
-    enviarSenhaPorEmail($emailReenvio, $nome, $senha_temporaria, $plan_name, $loginUrl);
-
+    enviarSenhaPorEmail($emailReenvio, $nome, $senha_hash, $plan_name, $loginUrl);
     // Mensagem  de retorno
     echo "<!DOCTYPE html>
 <html lang='pt-BR'>
@@ -234,7 +232,7 @@ if ($session_id) {
 
         // enviar e-mail com senha temporária
         $loginUrl = "http://localhost/TIAPN-Estoque-PUC/pages/login.php";
-        enviarSenhaPorEmail($email, $nome, $senha_temporaria, $plan_name, $loginUrl);
+        enviarSenhaPorEmail($email, $nome, $senha_hash, $plan_name, $loginUrl);
     }
 } else {
 
@@ -251,7 +249,7 @@ if ($session_id) {
 <head>
   <meta charset="UTF-8">
   <title>Pagamento confirmado</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
   <link href="../css/pagamento_sucesso.css" rel="stylesheet">
 </head>
 <body class="bg-light">
