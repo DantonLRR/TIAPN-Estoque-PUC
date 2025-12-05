@@ -1,0 +1,47 @@
+
+.btn-warning.btn-sm {
+  border-radius: 999px;
+  padding: 0.3rem 0.9rem;
+  font-weight: 500;
+  font-size: 0.85rem;
+  border: none;
+  background-color: #fbbf24;
+  color: #4a3a00;
+  transition: 0.2s ease-in-out;
+}
+
+.btn-warning.btn-sm:hover {
+  background-color: #f59e0b;
+  color: #3a2d00;
+}
+
+/* Espaçamento entre os dois botões finais */
+.card-body .btn + .btn {
+  margin-left: 0.5rem;
+}
+
+/* Responsivo em telas pequenas */
+@media (max-width: 576px) {
+  .container {
+    max-width: 95%;
+  }
+
+  .card-body {
+    padding: 24px 18px 22px;
+  }
+
+  .card-body h2 {
+    font-size: 1.4rem;
+  }
+
+  .btn-primary,
+  .btn-outline-secondary {
+    width: 100%;
+    margin-left: 0 !important;
+    margin-top: 0.5rem;
+  }
+
+  .card-body .btn + .btn {
+    margin-left: 0;
+  }
+}
