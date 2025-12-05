@@ -49,7 +49,7 @@ if (isset($_POST['editar_item'])) {
     $venda      = trim($_POST['preco_venda']);
 
     // Usuário logado responsável pela alteração
-    $usuario = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : 'desconhecido';
+    $usuario = isset($_SESSION['user']) ? $_SESSION['user'] : 'desconhecido';
 
     // 1️⃣ Buscar quantidade antiga
     $sql_old = "SELECT quantidade FROM estoque WHERE id = '$id'";
