@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 04/12/2025 às 22:08
+-- Tempo de geração: 05/12/2025 às 19:04
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -120,7 +120,9 @@ INSERT INTO `log_estoque` (`id_log`, `id_item`, `quantidade_anterior`, `quantida
 
 CREATE TABLE `orcamento_estoque` (
   `id` int(11) NOT NULL,
+  `idcliente` int(11) NOT NULL,
   `cliente` varchar(100) NOT NULL,
+  `doc_cliente` varchar(20) DEFAULT NULL,
   `dta_hora_orcamento` datetime NOT NULL,
   `vendedor` varchar(100) NOT NULL,
   `descricao` varchar(255) NOT NULL,
@@ -135,15 +137,20 @@ CREATE TABLE `orcamento_estoque` (
 -- Despejando dados para a tabela `orcamento_estoque`
 --
 
-INSERT INTO `orcamento_estoque` (`id`, `cliente`, `dta_hora_orcamento`, `vendedor`, `descricao`, `valor_orcado`, `id_item`, `nome_item`, `quantidade`, `status`) VALUES
-(8, 'teste', '2025-11-02 19:46:52', 'maria', '543543', 1233.00, 0, '', 0, 'Cancelado'),
-(9, 'danton', '2025-11-02 19:50:18', 'maria', 'sadas', 12312.00, 0, '', 0, 'Cancelado'),
-(10, 'danton', '2025-11-14 17:09:10', 'dantinho', 'teste', 1232131.00, 1, '', 10, 'Cancelado'),
-(11, 'danton', '2025-11-14 17:14:41', 'dantinho2', 'testttt', 231231.00, 4, 'calça bege', 24, 'Aprovado'),
-(12, 'Marcus', '2025-11-14 19:49:11', 'Fabio', 'Calça azul', 200.00, 3, 'calça azul', 2, 'Aprovado'),
-(13, 'Marcus', '2025-11-14 19:50:41', 'Fabio', 'vdgeeb', 200.00, 1, 'calça jeans preta', 7, 'Aprovado'),
-(14, 'leo', '2025-11-25 08:14:37', 'roney', 'venda de dois bones', 160.00, 5, 'Boné', 2, 'Aprovado'),
-(15, 'leo', '2025-11-28 21:37:22', 'roney', '.', 160.00, 5, 'Boné', 1, 'Pendente');
+INSERT INTO `orcamento_estoque` (`id`, `idcliente`, `cliente`, `doc_cliente`, `dta_hora_orcamento`, `vendedor`, `descricao`, `valor_orcado`, `id_item`, `nome_item`, `quantidade`, `status`) VALUES
+(8, 0, 'teste', NULL, '2025-11-02 19:46:52', 'maria', '543543', 1233.00, 0, '', 0, 'Cancelado'),
+(9, 0, 'danton', NULL, '2025-11-02 19:50:18', 'maria', 'sadas', 12312.00, 0, '', 0, 'Cancelado'),
+(10, 0, 'danton', NULL, '2025-11-14 17:09:10', 'dantinho', 'teste', 1232131.00, 1, '', 10, 'Cancelado'),
+(11, 0, 'danton', NULL, '2025-11-14 17:14:41', 'dantinho2', 'testttt', 231231.00, 4, 'calça bege', 24, 'Aprovado'),
+(12, 0, 'Marcus', NULL, '2025-11-14 19:49:11', 'Fabio', 'Calça azul', 200.00, 3, 'calça azul', 2, 'Aprovado'),
+(13, 0, 'Marcus', NULL, '2025-11-14 19:50:41', 'Fabio', 'vdgeeb', 200.00, 1, 'calça jeans preta', 7, 'Aprovado'),
+(14, 0, 'leo', NULL, '2025-11-25 08:14:37', 'roney', 'venda de dois bones', 160.00, 5, 'Boné', 2, 'Aprovado'),
+(15, 0, 'leo', NULL, '2025-11-28 21:37:22', 'roney', '.', 160.00, 5, 'Boné', 1, 'Pendente'),
+(16, 0, '4', '1345679089', '2025-12-05 12:36:45', 'Marcus', '18x calças', 12111.00, 3, 'calça azul', 18, 'Pendente'),
+(17, 0, '1', '111111111', '2025-12-05 12:48:56', 'Marcus', 'test', 232.00, 3, 'calça azul', 15, 'Pendente'),
+(18, 4, 'Guilherme', '1345679089', '2025-12-05 12:53:30', 'Marcus', 'teste', 33.00, 4, 'calça bege', 9, 'Pendente'),
+(19, 1, 'Marcus', '111111111', '2025-12-05 12:54:06', 'Marcus', 'teste', 333.00, 2, 'calça jeans preta', 8, 'Pendente'),
+(20, 4, 'Guilherme', '1345679089', '2025-12-05 14:22:02', 'Marcus', 'teste', 240.00, 4, 'calça bege', 2, 'Pendente');
 
 -- --------------------------------------------------------
 
@@ -235,9 +242,9 @@ INSERT INTO `usuarios` (`id`, `nome`, `usuario`, `tipo_usuario`, `senha`, `email
 (5, 'Vinicius', 'Vini', 'gerente', 'gucelo08', 'vnmz@gmail.com', '2025-11-21 18:30:40', '2025-11-21 18:30:40', 1),
 (6, 'Andrade', 'addd', 'gerente', 'gucelo08', 'stmarcusandrade44@gmail.com', '2025-11-21 18:33:19', '2025-11-21 18:33:19', 1),
 (7, 'Ryan', 'Terril', 'gerente_estoque', 'gucelo08', 'plenoR@gmail.com', '2025-11-21 18:47:15', '2025-11-21 18:47:15', 1),
-(8, 'AAA', 'senai', 'gerente', 'gucelo08', 'frg@hh.com', '2025-11-21 20:02:43', '2025-11-21 22:02:04', 1),
-(9, 'Gleison', 'pucprof@gmail.com', 'gerente', 'hugo', 'vnmz@gmail.com', '2025-11-21 21:56:30', '2025-11-21 21:56:30', 1),
-(10, 'Roney', 'Roneyvon', 'gerente', 'gucelo08', 'roney@gmail.com', '2025-11-25 12:12:38', '2025-11-27 02:26:48', 0);
+(8, 'AAA', 'senai', 'vendedor', 'gucelo08', 'frg@hh.com', '2025-11-21 20:02:43', '2025-11-21 22:02:04', 1),
+(9, 'Gleison', 'pucprof@gmail.com', 'vendedor', 'hugo', 'vnmz@gmail.com', '2025-11-21 21:56:30', '2025-11-21 21:56:30', 1),
+(10, 'Roney', 'Roneyvon', 'vendedor', 'gucelo08', 'roney@gmail.com', '2025-11-25 12:12:38', '2025-11-27 02:26:48', 0);
 
 --
 -- Índices para tabelas despejadas
@@ -311,7 +318,7 @@ ALTER TABLE `log_estoque`
 -- AUTO_INCREMENT de tabela `orcamento_estoque`
 --
 ALTER TABLE `orcamento_estoque`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de tabela `payments`
