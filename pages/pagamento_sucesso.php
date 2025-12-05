@@ -249,7 +249,7 @@ if ($session_id) {
 <head>
   <meta charset="UTF-8">
   <title>Pagamento confirmado</title>
-  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="../css/pagamento_sucesso.css" rel="stylesheet">
 </head>
 <body class="bg-light">
