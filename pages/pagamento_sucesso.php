@@ -2,7 +2,137 @@
 require_once __DIR__ . '/../crud/conexao_DB.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
+// Envia e-mail com senha para o cliente 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 session_start();
+
+
+// Funçãopara envio de senha por e-mail usando PHPMailer 
+
+function enviarSenhaPorEmail(string $email, string $nome, string $senha_temporaria, string $plan_name, string $loginUrl): void
+{
+    $mensagemHtml = "
+    <html><head><meta charset='UTF-8'><title>Dados de acesso</title></head><body>
+      <p>Olá, " . htmlspecialchars($nome) . "!</p>
+      <p>Seu pagamento do plano <strong>" . htmlspecialchars($plan_name) . "</strong> foi confirmado.</p>
+      <p>Segue sua senha temporária de acesso:</p>
+      <p><strong>Usuário:</strong> " . htmlspecialchars($email) . "<br>
+         <strong>Senha temporária:</strong> " . htmlspecialchars($senha_temporaria) . "</p>
+      <p>No primeiro login você poderá alterar sua senha.</p>
+      <p>Acesse: <a href='" . htmlspecialchars($loginUrl) . "'>" . htmlspecialchars($loginUrl) . "</a></p>
+      <br>
+      <p>Atenciosamente,<br>Sua equipe.</p>
+    </body></html>";
+
+    try {
+        $mail = new PHPMailer(true);
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'estoqueideal33@gmail.com';       // remetente
+        $mail->Password   = 'shqw jido vant lksg';         
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = 587;
+
+        $mail->CharSet = 'UTF-8';
+
+        // Remetente e destinatário
+        $mail->setFrom('estoqueideal33@gmail.com', 'estoqueideal');
+        $mail->addAddress($email, $nome);
+
+        // Conteúdo
+        $mail->isHTML(true);
+        $mail->Subject = "Acesso ao sistema - $plan_name";
+        $mail->Body    = $mensagemHtml;
+
+        //  texto do email
+        $mail->AltBody =
+            "Olá, {$nome}!\n\n" .
+            "Seu pagamento do plano {$plan_name} foi confirmado.\n\n" .
+            "Usuário: {$email}\n" .
+            "Senha temporária: {$senha_temporaria}\n\n" .
+            "Acesse: {$loginUrl}\n\n" .
+            "Atenciosamente,\nSua equipe.";
+
+        $mail->send();
+    } catch (Exception $e) {
+        // Em produção, só loga; em teste, pode exibir
+        error_log('Erro ao enviar e-mail: ' . $mail->ErrorInfo);
+        // echo '<pre>Erro ao enviar e-mail: ' . htmlspecialchars($mail->ErrorInfo) . '</pre>';
+    }
+}
+
+
+// ROTA DE REENVIO DE SENHA (TESTE) 
+
+
+if (isset($_GET['reenviar_senha'], $_GET['email'])) {
+
+    if (!isset($conn) || !($conn instanceof mysqli)) {
+        die("Falha na conexão com o banco de dados.");
+    }
+
+    $emailReenvio = $_GET['email'];
+
+    // Buscar usuário
+    $sql = "SELECT id, nome FROM usuarios WHERE email = ? LIMIT 1";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $emailReenvio);
+    mysqli_stmt_execute($stmt);
+    $result  = mysqli_stmt_get_result($stmt);
+    $usuario = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
+
+    if (!$usuario) {
+        die("Usuário não encontrado para o e-mail: " . htmlspecialchars($emailReenvio));
+    }
+
+    // Gerar nova senha temporária
+    $senha_temporaria = bin2hex(random_bytes(4));
+    $senha_hash       = password_hash($senha_temporaria, PASSWORD_DEFAULT);
+
+    // Atualizar no banco
+    $sqlUp = "UPDATE usuarios SET senha = ?, must_change_password = 1 WHERE email = ?";
+    $stmtUp = mysqli_prepare($conn, $sqlUp);
+    mysqli_stmt_bind_param($stmtUp, "ss", $senha_hash, $emailReenvio);
+    mysqli_stmt_execute($stmtUp);
+    mysqli_stmt_close($stmtUp);
+
+    // Dados para o e-mail
+    $nome      = $usuario['nome'] ?? 'Cliente';
+    $plan_name = 'Seu plano';
+    $loginUrl  = "http://localhost/TIAPN-Estoque-PUC/pages/login.php";
+
+    // Enviar e-mail
+    enviarSenhaPorEmail($emailReenvio, $nome, $senha_hash, $plan_name, $loginUrl);
+    // Mensagem  de retorno
+    echo "<!DOCTYPE html>
+<html lang='pt-BR'>
+<head>
+  <meta charset='UTF-8'>
+  <title>Reenvio de senha</title>
+  <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet'>
+</head>
+<body class='bg-light'>
+<div class='container mt-5'>
+  <div class='card shadow-sm'>
+    <div class='card-body'>
+      <h2 class='text-success'>Senha reenviada!</h2>
+      <p>Uma nova senha temporária foi enviada para o e-mail <strong>" . htmlspecialchars($emailReenvio) . "</strong>.</p>
+      <a href='login.php' class='btn btn-primary mt-3'>Ir para o login</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>";
+    exit;
+}
+
+
+//  ORIGINAL (STRIPE)
+
 
 $lastPayment      = $_SESSION['last_payment'] ?? null;
 $session_id       = $_GET['session_id'] ?? null;
@@ -102,29 +232,11 @@ if ($session_id) {
 
         // enviar e-mail com senha temporária
         $loginUrl = "http://localhost/TIAPN-Estoque-PUC/pages/login.php";
-
-        $mensagemHtml = "
-        <html><head><meta charset='UTF-8'><title>Dados de acesso</title></head><body>
-          <p>Olá, " . htmlspecialchars($nome) . "!</p>
-          <p>Seu pagamento do plano <strong>" . htmlspecialchars($plan_name) . "</strong> foi confirmado.</p>
-          <p>Segue sua senha temporária de acesso:</p>
-          <p><strong>Usuário:</strong> " . htmlspecialchars($email) . "<br>
-             <strong>Senha temporária:</strong> " . htmlspecialchars($senha_temporaria) . "</p>
-          <p>No primeiro login você poderá alterar sua senha.</p>
-          <p>Acesse: <a href='" . htmlspecialchars($loginUrl) . "'>" . htmlspecialchars($loginUrl) . "</a></p>
-          <br>
-          <p>Atenciosamente,<br>Sua equipe.</p>
-        </body></html>";
-
-        $headers  = "MIME-Version: 1.0\r\n";
-        $headers .= "Content-type:text/html; charset=UTF-8\r\n";
-        $headers .= "From: Seu Sistema <nao-responder@seudominio.com.br>\r\n";
-
-        @mail($email, "Acesso ao sistema - $plan_name", $mensagemHtml, $headers);
+        enviarSenhaPorEmail($email, $nome, $senha_hash, $plan_name, $loginUrl);
     }
 } else {
 
-    //STRIPE (PIX/BOL)
+    // STRIPE (PIX/BOL)
 
     if ($lastPayment) {
         $plan_name = $lastPayment['plan_name'] ?? 'Seu plano';
@@ -138,6 +250,7 @@ if ($session_id) {
   <meta charset="UTF-8">
   <title>Pagamento confirmado</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/pagamento_sucesso.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 <div class="container mt-5">
@@ -152,8 +265,21 @@ if ($session_id) {
           <p>Enviamos uma senha temporária para o e-mail
              <strong><?=htmlspecialchars($email)?></strong>.</p>
           <p>Use essa senha para fazer login e trocá-la assim que possível.</p>
+
+          <p class="mt-3 mb-1">Não recebeu o e-mail?</p>
+          <a href="pagamento_sucesso.php?reenviar_senha=1&email=<?= urlencode($email) ?>" 
+             class="btn btn-warning btn-sm">
+             Reenviar senha para este e-mail
+          </a>
+
         <?php else: ?>
           <p>Esse e-mail já possuía cadastro. Use sua senha atual ou recupere-a caso tenha esquecido.</p>
+
+          <p class="mt-3 mb-1">Não recebeu o e-mail ou esqueceu a senha?</p>
+          <a href="pagamento_sucesso.php?reenviar_senha=1&email=<?= urlencode($email) ?>" 
+             class="btn btn-warning btn-sm">
+             Reenviar senha para este e-mail
+          </a>
         <?php endif; ?>
 
       <?php elseif ($lastPayment): ?>
