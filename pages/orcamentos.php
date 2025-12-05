@@ -31,15 +31,15 @@ $buscaOrcamentos = $listaOrcamento->buscaOrcamentos($conn);
     <?php include('../assets/navbar/navbar.php'); ?>
     <div class="container mt-4">
         <?php include('../assets/mensagem/mensagem.php'); ?>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <h2 class="text-pink">Orçamento de vendas</h2>
+          <a href="criar_orcamento.php" class="btn btn-pink float-end"> Criar Orçamento</a>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4> Orçamentos
-                            <a href="criar_orcamento.php" class="btn btn-pink float-end"> Criar Orçamento</a>
-                        </h4>
-
-                    </div>
                     <div class="card-body">
                         <table class="table table-bordered table-striped">
                             <thead>
