@@ -108,26 +108,36 @@ if (isset($_GET['reenviar_senha'], $_GET['email'])) {
     // Enviar e-mail
     enviarSenhaPorEmail($emailReenvio, $nome, $senha_hash, $plan_name, $loginUrl);
     // Mensagem  de retorno
-    echo "<!DOCTYPE html>
+// Mensagem  de retorno
+echo "<!DOCTYPE html>
 <html lang='pt-BR'>
 <head>
   <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
   <title>Reenvio de senha</title>
   <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet'>
 </head>
 <body class='bg-light'>
-<div class='container mt-5'>
-  <div class='card shadow-sm'>
-    <div class='card-body'>
-      <h2 class='text-success'>Senha reenviada!</h2>
-      <p>Uma nova senha temporária foi enviada para o e-mail <strong>" . htmlspecialchars($emailReenvio) . "</strong>.</p>
-      <a href='login.php' class='btn btn-primary mt-3'>Ir para o login</a>
+  <div class='container-fluid vh-100 d-flex align-items-center justify-content-center'>
+    <div class='card shadow-sm' style='max-width: 480px; width: 100%;'>
+      <div class='card-body text-center p-4'>
+        <h1 class='h4 mb-3 text-success'>Senha reenviada</h1>
+        <p class='mb-2'>
+          Uma nova senha temporária foi enviada para o e-mail
+          <strong>" . htmlspecialchars($emailReenvio) . "</strong>.
+        </p>
+        <p class='text-muted mb-4'>
+          Use essa senha para acessar o sistema e alterá-la no primeiro login.
+        </p>
+        <a href='login.php' class='btn btn-primary w-100'>
+          Ir para o login
+        </a>
+      </div>
     </div>
   </div>
-</div>
 </body>
 </html>";
-    exit;
+exit;
 }
 
 
@@ -248,63 +258,81 @@ if ($session_id) {
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pagamento confirmado</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../css/pagamento_sucesso.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-<div class="container mt-5">
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <h2 class="text-success">Pagamento processado!</h2>
+  <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+    <div class="card shadow-sm" style="max-width: 560px; width: 100%;">
+      <div class="card-body p-4">
+        <h1 class="h4 text-success mb-3">Pagamento processado</h1>
 
-      <?php if ($fromStripe): ?>
-        <p>O pagamento do plano <strong><?=htmlspecialchars($plan_name)?></strong> foi confirmado.</p>
+        <?php if ($fromStripe): ?>
+          <p class="mb-2">
+            O pagamento do plano <strong><?=htmlspecialchars($plan_name)?></strong> foi confirmado.
+          </p>
 
-        <?php if ($senha_temporaria !== null): ?>
-          <p>Enviamos uma senha temporária para o e-mail
-             <strong><?=htmlspecialchars($email)?></strong>.</p>
-          <p>Use essa senha para fazer login e trocá-la assim que possível.</p>
+          <?php if ($senha_temporaria !== null): ?>
+            <p class="mb-1">
+              Enviamos uma senha temporária para o e-mail
+              <strong><?=htmlspecialchars($email)?></strong>.
+            </p>
+            <p class="text-muted">
+              Use essa senha para fazer login e trocá-la assim que possível.
+            </p>
 
-          <p class="mt-3 mb-1">Não recebeu o e-mail?</p>
-          <a href="pagamento_sucesso.php?reenviar_senha=1&email=<?= urlencode($email) ?>" 
-             class="btn btn-warning btn-sm">
-             Reenviar senha para este e-mail
-          </a>
+            <p class="mt-3 mb-2 fw-semibold">Não recebeu o e-mail?</p>
+            <a href="pagamento_sucesso.php?reenviar_senha=1&email=<?=urlencode($email)?>"
+               class="btn btn-warning btn-sm">
+              Reenviar senha para este e-mail
+            </a>
+
+          <?php else: ?>
+            <p class="mb-3">
+              Esse e-mail já possuía cadastro. Use sua senha atual ou recupere-a caso tenha esquecido.
+            </p>
+
+            <p class="mt-3 mb-2 fw-semibold">Precisa de ajuda com a senha?</p>
+            <a href="pagamento_sucesso.php?reenviar_senha=1&email=<?=urlencode($email)?>"
+               class="btn btn-warning btn-sm">
+              Reenviar senha para este e-mail
+            </a>
+          <?php endif; ?>
+
+        <?php elseif ($lastPayment): ?>
+          <p class="mb-2">Seu pagamento foi registrado com sucesso.</p>
+          <ul class="list-unstyled mb-3">
+            <li><strong>Plano:</strong> <?=htmlspecialchars($lastPayment['plan_name'])?></li>
+            <li><strong>Valor:</strong> R$ <?=htmlspecialchars($lastPayment['amount'])?></li>
+            <li><strong>Método:</strong> <?=strtoupper(htmlspecialchars($lastPayment['method']))?></li>
+            <li><strong>Status interno:</strong> <?=htmlspecialchars($lastPayment['status'])?></li>
+          </ul>
+
+          <?php if (!empty($lastPayment['pix_code']) && $lastPayment['method'] === 'pix'): ?>
+            <p class="small text-muted">
+              <strong>Código PIX (exemplo):</strong><br>
+              <?=nl2br(htmlspecialchars($lastPayment['pix_code']))?>
+            </p>
+          <?php elseif (!empty($lastPayment['boleto_line']) && $lastPayment['method'] === 'boleto'): ?>
+            <p class="small text-muted">
+              <strong>Linha digitável do boleto (exemplo):</strong><br>
+              <?=nl2br(htmlspecialchars($lastPayment['boleto_line']))?>
+            </p>
+          <?php endif; ?>
 
         <?php else: ?>
-          <p>Esse e-mail já possuía cadastro. Use sua senha atual ou recupere-a caso tenha esquecido.</p>
-
-          <p class="mt-3 mb-1">Não recebeu o e-mail ou esqueceu a senha?</p>
-          <a href="pagamento_sucesso.php?reenviar_senha=1&email=<?= urlencode($email) ?>" 
-             class="btn btn-warning btn-sm">
-             Reenviar senha para este e-mail
-          </a>
+          <p class="mb-3">Não encontramos informações do pagamento na sessão.</p>
         <?php endif; ?>
 
-      <?php elseif ($lastPayment): ?>
-        <p>Seu pagamento foi registrado com sucesso.</p>
-        <ul>
-          <li><strong>Plano:</strong> <?=htmlspecialchars($lastPayment['plan_name'])?></li>
-          <li><strong>Valor:</strong> R$ <?=htmlspecialchars($lastPayment['amount'])?></li>
-          <li><strong>Método:</strong> <?=strtoupper(htmlspecialchars($lastPayment['method']))?></li>
-          <li><strong>Status interno:</strong> <?=htmlspecialchars($lastPayment['status'])?></li>
-        </ul>
+        <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+          <a href="login.php" class="btn btn-primary w-100">Ir para o login</a>
+          <a href="planos.php" class="btn btn-outline-secondary w-100">Voltar aos planos</a>
+        </div>
 
-        <?php if (!empty($lastPayment['pix_code']) && $lastPayment['method'] === 'pix'): ?>
-          <p><strong>Código PIX (exemplo):</strong><br><?=htmlspecialchars($lastPayment['pix_code'])?></p>
-        <?php elseif (!empty($lastPayment['boleto_line']) && $lastPayment['method'] === 'boleto'): ?>
-          <p><strong>Linha digitável do boleto (exemplo):</strong><br><?=htmlspecialchars($lastPayment['boleto_line'])?></p>
-        <?php endif; ?>
-
-      <?php else: ?>
-        <p>Não encontramos informações do pagamento na sessão.</p>
-      <?php endif; ?>
-
-      <a href="login.php" class="btn btn-primary mt-3">Ir para o login</a>
-      <a href="planos.php" class="btn btn-outline-secondary mt-3 ms-2">Voltar aos planos</a>
+      </div>
     </div>
   </div>
-</div>
 </body>
 </html>
+
