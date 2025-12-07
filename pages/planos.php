@@ -163,7 +163,7 @@ function normaliza_nome_plano(string $nome): string {
 <body>
 
   <!-- Navbar -->
-  <?php include('../assets/navbar/navbar.php'); ?>
+  <?php include('../assets/navbar/navbar2.php'); ?>
 
   <!-- ==================== HERO / CARROSSEL ==================== -->
   <div class="container-back">
