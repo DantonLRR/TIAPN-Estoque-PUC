@@ -32,10 +32,13 @@ Esta aplicação PHP foi organizada para rodar localmente com XAMPP e usa MySQL 
 **Instalação (XAMPP)**
 1.Em seu navegador busque por XAMPP e acesse o primeiro link
 ![alt text](image.png)
+
 2.Clique em baixar XAMPP para o Windows
 ![alt text](image-1.png)
+
 3.Extraia o arquivo e de proximo em tudo
 ![alt text](image-2.png)
+
 4.O XAMMP estra pronto para uso
 ![alt text](image-3.png)
 
