@@ -1,3 +1,25 @@
+# Estoque Ideal
+
+`Analise e Desenvolvimento de sistemas`
+
+`Trabalho Interdisciplinar: Aplicações para Processos de Negócios`
+
+`2º Semestre`
+
+## Integrantes
+
+* Arthur Nunes
+* Carlos Eduardo
+* Bernardo Morreira
+* Danton Lucas
+* Erick Ryan
+* Lucas Ramos
+* Marcus Andrade
+
+## Orientador
+
+* Gleisson Albergaria Amaral
+
 # 📦 Sistema de Controle de Estoque e Orçamentos
 Projeto de gerenciamento de estoque com funçoes de geração de estoque,controle do fluxo dos clientes e visualização de relatorios.
 Esse projeto foi desenvolvido para fins academicos
@@ -81,7 +103,6 @@ composer require stripe/stripe
 
 ---
 **👨‍💻Autores**
-
 Danton Lucas
 GitHub:https://github.com/DantonLRR
 Linkedin:https://www.linkedin.com/in/dantonlucas/
