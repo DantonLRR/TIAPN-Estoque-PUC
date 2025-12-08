@@ -81,6 +81,7 @@ composer require stripe/stripe
 
 ---
 **👨‍💻Autores**
+
 Danton Lucas
 GitHub:https://github.com/DantonLRR
 Linkedin:https://www.linkedin.com/in/dantonlucas/
